@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset Tracker Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+        }
+
+        header {
+            background-color: #1e90ff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 2.2em;
+            font-weight: bold;
+            position: relative;
+        }
+
+        header .logout {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            background-color: #ff6347;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: white;
+            text-decoration: none;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        header .logout:hover {
+            background-color: #ff4500;
+        }
+
+        header .user-email {
+            position: absolute;
+            right: 200px;
+            top: 20px;
+            color: white;
+            font-size: 1em;
+        }
+
+        .container {
+            padding: 50px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #1e90ff;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            font-size: 1.2em;
+            color: #555;
+            margin-bottom: 40px;
+        }
+
+        .asset-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .asset-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .asset-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .asset-card h3 {
+            color: #1e90ff;
+            margin-bottom: 10px;
+        }
+
+        .asset-card p {
+            font-size: 1em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .asset-card a {
+            background-color: #1e90ff;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .asset-card a:hover {
+            background-color: #4682b4;
+        }
+
+        .add-asset {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #1e90ff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-asset:hover {
+            background-color: #4682b4;
+        }
+
+        footer {
+            background-color: #1e90ff;
+            color: white;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        Asset Tracker Dashboard
+        <div class="user-email">Signed In As: {{ user_email }}</div>
+        <a href="/logout" class="logout">Logout</a>
+    </header>
+
+    <div class="container">
+        <h1>Your Assets</h1>
+        <p class="description">Below is a list of your tracked assets. Click on any asset for more details or to edit its information.</p>
+
+        <div class="asset-grid">
+            {% for asset_id, asset in assets.items() %}
+            <div class="asset-card">
+                <h3>{{ asset.name }}</h3>
+                <p>Description: {{ asset.name }}</p>
+                <p>Status: {{ asset.status }}</p>
+                <a href="{{ url_for('asset_detail', asset_id=asset_id) }}">View Details</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <a href="{{ url_for('create_asset') }}" class="add-asset">+</a>
+
+    <footer>
+        &copy; 2024 Asset Tracker. All rights reserved.
+    </footer>
+
+</body>
+</html>
