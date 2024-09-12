@@ -73,9 +73,8 @@
 </head>
 <body>
 
-
     <header>
-        Welcome to Our Platform
+        Welcome to Asset Tracker
     </header>
 
     <div class="container">
@@ -83,13 +82,13 @@
         <p>Join our community by logging in or registering today! It's fast and easy.</p>
 
         <div class="buttons">
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('register') }}">Register</a>
         </div>
     </div>
 
     <footer>
-        &copy; 2024 Our Platform. All rights reserved.
+        &copy; 2024 Asset Tracker. All rights reserved.
     </footer>
 
 </body>

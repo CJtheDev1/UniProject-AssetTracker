@@ -98,7 +98,7 @@
     <div class="container">
         <h1>Create Asset</h1>
 
-        <form method="POST">
+        <form method="POST" action="{{ url_for('create_asset') }}">
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name" required>

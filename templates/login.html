@@ -21,7 +21,6 @@
             top: 0;
             left: 0;
             background: url('https://pictureforuni.s3.eu-north-1.amazonaws.com/untitled-2.gif') no-repeat center center fixed;
-
             background-size: cover;
             z-index: -1;
         }
@@ -121,6 +120,7 @@
     </header>
 
     <div class="container">
+        <!-- Display flash messages for login errors or success -->
         {% with messages = get_flashed_messages(with_categories=True) %}
             {% if messages %}
                 <ul class="flash-messages">
@@ -133,7 +133,8 @@
 
         <h1>Welcome Back</h1>
 
-        <form method="POST">
+        <!-- Login form -->
+        <form method="POST" action="{{ url_for('login') }}">
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" required>

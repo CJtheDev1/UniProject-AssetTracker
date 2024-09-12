@@ -141,20 +141,20 @@
 
     <header>
         Asset Details
-        <a href="/logout" class="logout">Logout</a>
+        <a href="{{ url_for('logout') }}" class="logout">Logout</a>
     </header>
 
     <div class="container">
         <h1>Asset: {{ asset.name }}</h1>
 
         <div class="asset-info">
-            <p><strong>Description:</strong> {{ asset.name }}</p>
+            <p><strong>Description:</strong> {{ asset.description }}</p>
             <p><strong>Current Status:</strong> {{ asset.status }}</p>
             <p><strong>Current Owner:</strong> {{ asset.owner }}</p>
         </div>
 
         <h2>Edit Asset Details</h2>
-        <form method="POST">
+        <form method="POST" action="{{ url_for('update_asset', asset_id=asset.id) }}">
             <div class="form-group">
                 <label for="status">Status</label>
                 <input type="text" id="status" name="status" value="{{ asset.status }}" required>
@@ -168,7 +168,7 @@
             </div>
         </form>
 
-        <form method="POST" action="{{ url_for('asset_detail', asset_id=asset_id) }}" style="display:inline;">
+        <form method="POST" action="{{ url_for('delete_asset', asset_id=asset.id) }}" style="display:inline;">
             <input type="hidden" name="delete" value="true">
             <button type="submit" class="delete-button">Delete Asset</button>
         </form>
