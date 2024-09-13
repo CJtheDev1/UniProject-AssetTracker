@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asset Details</title>
     <style>
+        /* Existing CSS styles */
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
@@ -12,8 +13,6 @@
             overflow: hidden;
             color: #fff;
         }
-
-        /* Starry night background with GIF */
         .background {
             position: fixed;
             width: 100%;
@@ -24,7 +23,6 @@
             background-size: cover;
             z-index: -1;
         }
-
         header {
             background-color: rgba(0, 0, 0, 0.8);
             color: white;
@@ -37,7 +35,6 @@
             align-items: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
         }
-
         header .logout {
             background-color: #ff6347;
             padding: 10px 20px;
@@ -47,11 +44,9 @@
             font-size: 1em;
             transition: background-color 0.3s ease;
         }
-
         header .logout:hover {
             background-color: #ff4500;
         }
-
         .container {
             padding: 30px;
             max-width: 900px;
@@ -61,31 +56,26 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             color: #333;
         }
-
         h1 {
             color: #1e90ff;
             font-size: 2.5em;
             margin-bottom: 20px;
             text-align: center;
         }
-
         .asset-info p {
             font-size: 1.2em;
             color: #333;
             margin-bottom: 15px;
         }
-
         .form-group {
             margin-bottom: 20px;
         }
-
         .form-group label {
             display: block;
             font-weight: bold;
             margin-bottom: 5px;
             color: #1e90ff;
         }
-
         .form-group input {
             width: 100%;
             padding: 10px;
@@ -93,7 +83,6 @@
             border-radius: 5px;
             border: 1px solid #ddd;
         }
-
         .form-group button {
             background-color: #1e90ff;
             color: white;
@@ -104,11 +93,9 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-
         .form-group button:hover {
             background-color: #4682b4;
         }
-
         .delete-button {
             background-color: #ff6347;
             padding: 10px 20px;
@@ -119,11 +106,9 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-
         .delete-button:hover {
             background-color: #ff4500;
         }
-
         .back-button {
             display: inline-block;
             margin-top: 20px;
@@ -135,11 +120,9 @@
             font-size: 1em;
             transition: background-color 0.3s ease;
         }
-
         .back-button:hover {
             background-color: #4682b4;
         }
-
         footer {
             background-color: rgba(0, 0, 0, 0.8);
             color: white;
@@ -172,7 +155,7 @@
 
         <!-- Edit Asset Form -->
         <h2>Edit Asset Details</h2>
-        <form method="POST" action="{{ url_for('update_asset', asset_id=asset.id) }}">
+        <form method="POST" action="{{ url_for('asset_detail', asset_id=asset_id) }}">
             <div class="form-group">
                 <label for="status">Status</label>
                 <input type="text" id="status" name="status" value="{{ asset.status }}" required>
@@ -182,12 +165,16 @@
                 <input type="text" id="owner" name="owner" value="{{ asset.owner }}" required>
             </div>
             <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description" value="{{ asset.description }}" required>
+            </div>
+            <div class="form-group">
                 <button type="submit">Save Changes</button>
             </div>
         </form>
 
         <!-- Delete Asset Form -->
-        <form method="POST" action="{{ url_for('delete_asset', asset_id=asset.id) }}" style="display:inline;">
+        <form method="POST" action="{{ url_for('asset_detail', asset_id=asset_id) }}" style="display:inline;">
             <input type="hidden" name="delete" value="true">
             <button type="submit" class="delete-button">Delete Asset</button>
         </form>
