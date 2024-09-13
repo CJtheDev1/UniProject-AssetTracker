@@ -5,43 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
     <style>
-        /* General styles */
-        body {
-            font-family: 'Arial', sans-serif;
+        /* General Styles */
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f0f8ff; /* Light blue background */
-            color: #333;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('https://pictureforuni.s3.eu-north-1.amazonaws.com/untitled-2.gif') no-repeat center center fixed;
+            background-size: cover;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            justify-content: space-between;
         }
 
         header {
-            background-color: #1e90ff; /* Dodger Blue */
-            color: white;
+            background: rgba(30, 144, 255, 0.8); /* Slightly transparent Dodger Blue */
+            color: #fff;
             padding: 20px;
             text-align: center;
-            font-size: 2em;
+            font-size: 2.5em;
             font-weight: bold;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
         }
 
         .container {
             text-align: center;
             padding: 50px;
+            background: rgba(0, 0, 0, 0.6); /* Transparent black box */
+            margin: 0 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         h1 {
-            color: #1e90ff;
-            font-size: 2.5em;
+            font-size: 3em;
+            color: #fff;
             margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         p {
-            font-size: 1.2em;
-            color: #555;
+            font-size: 1.4em;
+            color: #dcdcdc;
             margin-bottom: 40px;
         }
 
         .buttons {
-            margin-top: 20px;
+            margin-top: 30px;
         }
 
         .buttons a {
@@ -50,24 +67,56 @@
             background-color: #1e90ff; /* Dodger Blue */
             padding: 15px 30px;
             margin: 10px;
-            border-radius: 5px;
-            font-size: 1.2em;
-            display: inline-block;
-            transition: background-color 0.3s ease;
+            border-radius: 10px;
+            font-size: 1.3em;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
         }
 
         .buttons a:hover {
             background-color: #4682b4; /* Steel Blue */
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
         }
 
         footer {
-            background-color: #1e90ff;
+            background: rgba(30, 144, 255, 0.8); /* Slightly transparent Dodger Blue */
             color: white;
-            padding: 10px 0;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
+            padding: 15px;
             text-align: center;
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
+            font-size: 1em;
+            letter-spacing: 1px;
+        }
+
+        /* For smoother font */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            p {
+                font-size: 1.2em;
+            }
+
+            .buttons a {
+                font-size: 1.1em;
+                padding: 12px 25px;
+            }
+        }
+
+        /* Add a subtle breathing animation */
+        .container {
+            animation: pulse 4s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.02);
+            }
         }
     </style>
 </head>
@@ -78,8 +127,8 @@
     </header>
 
     <div class="container">
-        <h1>Explore and Enjoy</h1>
-        <p>Join our community by logging in or registering today! It's fast and easy.</p>
+        <h1>Relax, Track, and Enjoy</h1>
+        <p>Join our calm and efficient asset management platform. Log in or sign up now to get started.</p>
 
         <div class="buttons">
             <a href="{{ url_for('login') }}">Login</a>
