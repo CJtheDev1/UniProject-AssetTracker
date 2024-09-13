@@ -1,22 +1,33 @@
 import re
 from flask import Flask, render_template, request, redirect, url_for, flash
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 import bcrypt
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Required for flashing messages
 
-# In-memory dictionary to store users and assets
-users = {}
-assets = {
-    1: {"name": "Laptop - MacBook Pro", "description": "A high-performance laptop", "status": "In Use",
-        "owner": "John Doe"},
-    2: {"name": "Printer - HP LaserJet", "description": "Office printer", "status": "Available", "owner": "Jane Smith"},
-    3: {"name": "Phone - iPhone 12", "description": "Assigned company phone", "status": "Assigned",
-        "owner": "Michael Brown"},
-    4: {"name": "Monitor - Dell 24 inch", "description": "Monitor for IT department", "status": "In Storage",
-        "owner": "Emily Davis"}
-}
+# PostgreSQL database configuration
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://default:your_password@ep-orange-night-a4sgorcj.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Disable the modification tracking
 
+# Initialize SQLAlchemy and Flask-Migrate
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+
+# Define the User model
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    password_hash = db.Column(db.String(128), nullable=False)
+
+# Define the Asset model
+class Asset(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.String(200), nullable=False)
+    status = db.Column(db.String(50), nullable=False)
+    owner = db.Column(db.String(100), nullable=False)
 
 # Password validation function
 def validate_password(password):
@@ -27,12 +38,10 @@ def validate_password(password):
         return "Password must contain at least one special character."
     return None
 
-
 # Home route
 @app.route('/')
 def home():
     return render_template('home.html')
-
 
 # Login route
 @app.route('/login', methods=['GET', 'POST'])
@@ -41,16 +50,12 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
-        if username in users:
-            if bcrypt.checkpw(password.encode('utf-8'), users[username]):
-                return redirect(url_for('dashboard', user_email=username))
-            else:
-                flash("Invalid password.")
-        else:
-            flash("User not found.")
+        user = User.query.filter_by(username=username).first()
+        if user and bcrypt.checkpw(password.encode('utf-8'), user.password_hash.encode('utf-8')):
+            return redirect(url_for('dashboard', user_email=username))
+        flash("Invalid username or password.")
 
     return render_template('login.html')
-
 
 # Register route
 @app.route('/register', methods=['GET', 'POST'])
@@ -64,24 +69,25 @@ def register():
             flash(password_error)
             return render_template('register.html')
 
-        if username in users:
+        if User.query.filter_by(username=username).first():
             flash("User already exists!")
             return render_template('register.html')
         else:
             hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-            users[username] = hashed_password
+            new_user = User(username=username, password_hash=hashed_password.decode('utf-8'))
+            db.session.add(new_user)
+            db.session.commit()
             flash("Registration successful! You can now <a href='/login'>login</a>.")
             return redirect(url_for('login'))
 
     return render_template('register.html')
 
-
 # Dashboard route
 @app.route('/dashboard')
 def dashboard():
     user_email = request.args.get('user_email', 'Guest')
+    assets = Asset.query.all()
     return render_template('dashboard.html', assets=assets, user_email=user_email)
-
 
 # Create Asset route
 @app.route('/create_asset', methods=['GET', 'POST'])
@@ -92,22 +98,17 @@ def create_asset():
         status = request.form['status']
         owner = request.form['owner']
 
-        new_id = max(assets.keys()) + 1 if assets else 1
-        assets[new_id] = {
-            "name": name,
-            "description": description,
-            "status": status,
-            "owner": owner
-        }
+        new_asset = Asset(name=name, description=description, status=status, owner=owner)
+        db.session.add(new_asset)
+        db.session.commit()
         return redirect(url_for('dashboard'))
 
     return render_template('create_asset.html')
 
-
 # Asset Detail route
 @app.route('/asset/<int:asset_id>', methods=['GET', 'POST'])
 def asset_detail(asset_id):
-    asset = assets.get(asset_id)
+    asset = Asset.query.get(asset_id)
 
     if not asset:
         return "Asset not found.", 404
@@ -118,29 +119,26 @@ def asset_detail(asset_id):
             status = request.form['status']
             owner = request.form['owner']
             description = request.form['description']
-            assets[asset_id] = {
-                "name": asset["name"],
-                "status": status,
-                "owner": owner,
-                "description": description
-            }
-            flash(f"Asset '{asset['name']}' updated successfully!")
+            asset.status = status
+            asset.owner = owner
+            asset.description = description
+            db.session.commit()
+            flash(f"Asset '{asset.name}' updated successfully!")
         elif 'delete' in request.form:
             # Delete asset
-            del assets[asset_id]
-            flash(f"Asset '{asset['name']}' deleted successfully!")
+            db.session.delete(asset)
+            db.session.commit()
+            flash(f"Asset '{asset.name}' deleted successfully!")
             return redirect(url_for('dashboard'))
 
         return redirect(url_for('asset_detail', asset_id=asset_id))
 
     return render_template('asset_detail.html', asset=asset, asset_id=asset_id)
 
-
 # Logout route
 @app.route('/logout')
 def logout():
     return redirect(url_for('home'))
-
 
 if __name__ == '__main__':
     app.run(debug=True)
