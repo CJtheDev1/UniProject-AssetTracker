@@ -9,23 +9,36 @@
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        /* Starry night background with GIF */
+        .background {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: url('https://pictureforuni.s3.eu-north-1.amazonaws.com/untitled-2.gif') no-repeat center center fixed;
+            background-size: cover;
+            z-index: -1;
         }
 
         header {
-            background-color: #1e90ff;
+            background-color: rgba(0, 0, 0, 0.8);
             color: white;
-            padding: 15px 20px;
+            padding: 20px;
             text-align: center;
-            position: relative;
-            font-size: 2em;
+            font-size: 2.5em;
             font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
         }
 
         header .logout {
-            position: absolute;
-            right: 20px;
-            top: 20px;
             background-color: #ff6347;
             padding: 10px 20px;
             border-radius: 5px;
@@ -41,28 +54,25 @@
 
         .container {
             padding: 30px;
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: white;
+            max-width: 900px;
+            margin: 50px auto;
+            background-color: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            color: #333;
         }
 
         h1 {
             color: #1e90ff;
-            font-size: 2.2em;
+            font-size: 2.5em;
             margin-bottom: 20px;
             text-align: center;
-        }
-
-        .asset-info {
-            margin-bottom: 30px;
         }
 
         .asset-info p {
             font-size: 1.2em;
             color: #333;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         .form-group {
@@ -73,6 +83,7 @@
             display: block;
             font-weight: bold;
             margin-bottom: 5px;
+            color: #1e90ff;
         }
 
         .form-group input {
@@ -130,14 +141,19 @@
         }
 
         footer {
-            background-color: #1e90ff;
+            background-color: rgba(0, 0, 0, 0.8);
             color: white;
             padding: 10px 0;
             text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
         }
     </style>
 </head>
 <body>
+
+    <div class="background"></div>
 
     <header>
         Asset Details
@@ -147,12 +163,14 @@
     <div class="container">
         <h1>Asset: {{ asset.name }}</h1>
 
+        <!-- Asset Information -->
         <div class="asset-info">
             <p><strong>Description:</strong> {{ asset.description }}</p>
             <p><strong>Current Status:</strong> {{ asset.status }}</p>
             <p><strong>Current Owner:</strong> {{ asset.owner }}</p>
         </div>
 
+        <!-- Edit Asset Form -->
         <h2>Edit Asset Details</h2>
         <form method="POST" action="{{ url_for('update_asset', asset_id=asset.id) }}">
             <div class="form-group">
@@ -168,6 +186,7 @@
             </div>
         </form>
 
+        <!-- Delete Asset Form -->
         <form method="POST" action="{{ url_for('delete_asset', asset_id=asset.id) }}" style="display:inline;">
             <input type="hidden" name="delete" value="true">
             <button type="submit" class="delete-button">Delete Asset</button>
