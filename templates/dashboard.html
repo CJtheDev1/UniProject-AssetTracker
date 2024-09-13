@@ -64,8 +64,14 @@
             background-color: #ff4500;
         }
 
+        .content-wrapper {
+            overflow-y: auto;
+            max-height: calc(100vh - 160px); /* Adjust to allow scrolling but not overlap footer/header */
+            padding: 20px;
+        }
+
         .container {
-            padding: 50px;
+            padding: 30px 50px;
             text-align: center;
             z-index: 1;
             position: relative;
@@ -180,19 +186,22 @@
         </div>
     </header>
 
-    <div class="container">
-        <h1>Your Assets</h1>
-        <p class="description">Below is a list of your tracked assets. Click on any asset for more details or to edit its information.</p>
+    <!-- Content Wrapper with Scrollable Content -->
+    <div class="content-wrapper">
+        <div class="container">
+            <h1>Your Assets</h1>
+            <p class="description">Below is a list of your tracked assets. Click on any asset for more details or to edit its information.</p>
 
-        <div class="asset-grid">
-            {% for asset_id, asset in assets.items() %}
-            <div class="asset-card">
-                <h3>{{ asset.name }}</h3>
-                <p>Description: {{ asset.description }}</p>
-                <p>Status: {{ asset.status }}</p>
-                <a href="{{ url_for('asset_detail', asset_id=asset_id) }}">View Details</a>
+            <div class="asset-grid">
+                {% for asset_id, asset in assets.items() %}
+                <div class="asset-card">
+                    <h3>{{ asset.name }}</h3>
+                    <p>Description: {{ asset.description }}</p>
+                    <p>Status: {{ asset.status }}</p>
+                    <a href="{{ url_for('asset_detail', asset_id=asset_id) }}">View Details</a>
+                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
     </div>
 
