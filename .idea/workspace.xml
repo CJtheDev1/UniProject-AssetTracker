@@ -126,15 +126,7 @@
       <workItem from="1726228890174" duration="5552000" />
       <workItem from="1726577755309" duration="765000" />
       <workItem from="1726662485876" duration="1735000" />
-      <workItem from="1727014789895" duration="7723000" />
-    </task>
-    <task id="LOCAL-00008" summary="Phase 1A Home page changes">
-      <option name="closed" value="true" />
-      <created>1726217976061</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1726217976061</updated>
+      <workItem from="1727014789895" duration="8510000" />
     </task>
     <task id="LOCAL-00009" summary="Phase 1A Home page changes">
       <option name="closed" value="true" />
@@ -520,7 +512,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727023191145</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="Phase 1H fixes for dashboard to usermanagement also lockoff for users compared to admins">
+      <option name="closed" value="true" />
+      <created>1727023463592</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1727023463592</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
