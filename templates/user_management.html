@@ -68,8 +68,14 @@
             actionButton.disabled = true; // Disable the button
 
             const formData = new FormData(form);
+
+            // Log form data for debugging
+            for (var pair of formData.entries()) {
+                console.log(pair[0]+ ': ' + pair[1]);
+            }
+
             const xhr = new XMLHttpRequest();
-            xhr.open("POST", form.getAttribute('action'), true); // Ensure the action is read correctly
+            xhr.open("POST", form.action, true);
             xhr.onload = function () {
                 actionButton.disabled = false; // Re-enable the button
                 if (xhr.status === 200) {

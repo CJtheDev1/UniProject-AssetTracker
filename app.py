@@ -123,24 +123,31 @@ def user_management():
     users = User.query.all()
 
     if request.method == 'POST':
+        # Get form values
         action = request.form.get('action')
         user_id = request.form.get('user_id')
+        new_permissions = request.form.get('permissions')
+
         user = User.query.get(user_id)
 
+        # Handle user not found
         if not user:
             return jsonify({'success': False, 'message': 'User not found.'}), 404
 
+        # Handle actions
         if action == 'delete':
             db.session.delete(user)
             db.session.commit()
             return jsonify({'success': True, 'message': f"User '{user.username}' deleted successfully!"}), 200
-        elif action == 'update' and request.form.get('permissions'):
-            new_permissions = request.form.get('permissions')
-            user.permissions = new_permissions
-            db.session.commit()
-            return jsonify({'success': True, 'message': f"User '{user.username}' permissions updated to '{new_permissions}'."}), 200
+        elif action == 'update':
+            if new_permissions:
+                user.permissions = new_permissions
+                db.session.commit()
+                return jsonify({'success': True, 'message': f"User '{user.username}' permissions updated to '{new_permissions}'."}), 200
+            else:
+                return jsonify({'success': False, 'message': 'Permissions are required for update.'}), 400
 
-        return jsonify({'success': False, 'message': 'Invalid action or missing permissions.'}), 400
+        return jsonify({'success': False, 'message': 'Invalid action.'}), 400
 
     return render_template('user_management.html', users=users)
 
