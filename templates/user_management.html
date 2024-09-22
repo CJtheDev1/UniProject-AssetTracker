@@ -79,7 +79,7 @@
                     alert(response.message);
                     location.reload(); // Refresh the page to see updates
                 } else {
-                    alert('Error updating permissions: ' + response.message || xhr.responseText);
+                    alert('Error updating permissions: ' + (response.message || xhr.responseText));
                 }
             };
             xhr.onerror = function () {
