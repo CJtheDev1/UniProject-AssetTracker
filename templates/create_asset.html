@@ -9,133 +9,126 @@
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #000; /* Black background */
             color: #fff;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
+            overflow: hidden;
+        }
+
+        .background {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: url('https://pictureforuni.s3.eu-north-1.amazonaws.com/untitled-2.gif') no-repeat center center fixed;
+            background-size: cover;
+            z-index: -1;
         }
 
         header {
-            background-color: #1e90ff;
+            background-color: rgba(0, 0, 0, 0.8);
             color: white;
             padding: 20px;
             text-align: center;
-            font-size: 2.2em;
+            font-size: 2.5em;
             font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
         }
 
         .container {
-            flex: 1;
-            padding: 50px;
-            max-width: 800px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            padding: 30px 50px;
+            text-align: center;
+            z-index: 1;
+            position: relative;
+            color: white;
         }
 
         h1 {
             color: #1e90ff;
             font-size: 2.5em;
             margin-bottom: 20px;
-            text-align: center;
         }
 
-        .form-group {
-            margin-bottom: 20px;
-            width: 100%;
+        form {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #333;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
-        .form-group label {
+        label {
             display: block;
+            margin: 15px 0 5px;
             font-weight: bold;
-            margin-bottom: 5px;
         }
 
-        .form-group input, .form-group textarea {
+        input, select {
             width: 100%;
             padding: 10px;
-            font-size: 1em;
             border-radius: 5px;
-            border: 1px solid #ddd;
-            background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent */
-            color: #fff;
+            border: 1px solid #ccc;
+            margin-bottom: 15px;
+            font-size: 1em;
         }
 
-        .form-group button {
+        button {
             background-color: #1e90ff;
             color: white;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
-            font-size: 1em;
+            font-size: 1.2em;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
 
-        .form-group button:hover {
-            background-color: #4682b4;
-        }
-
-        .back-button {
-            display: inline-block;
-            background-color: #1e90ff;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 1em;
-            transition: background-color 0.3s ease;
-            margin-top: 20px;
-        }
-
-        .back-button:hover {
+        button:hover {
             background-color: #4682b4;
         }
 
         footer {
-            background-color: #1e90ff;
+            background-color: rgba(0, 0, 0, 0.8);
             color: white;
             padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
             text-align: center;
-            position: relative;
+            z-index: 10;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.4);
         }
     </style>
 </head>
 <body>
+
+    <div class="background"></div>
 
     <header>
         Create New Asset
     </header>
 
     <div class="container">
-        <h1>Create Asset</h1>
+        <h1>New Asset Form</h1>
+        <form action="{{ url_for('create_asset') }}" method="POST">
+            <label for="name">Asset Name</label>
+            <input type="text" id="name" name="name" required>
 
-        <form method="POST" action="{{ url_for('create_asset') }}">
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="description">Description</label>
-                <textarea id="description" name="description" rows="4" required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="status">Status</label>
-                <input type="text" id="status" name="status" required>
-            </div>
-            <div class="form-group">
-                <label for="owner">Owner</label>
-                <input type="text" id="owner" name="owner" required>
-            </div>
-            <div class="form-group">
-                <button type="submit">Create Asset</button>
-            </div>
+            <label for="description">Description</label>
+            <input type="text" id="description" name="description" required>
+
+            <label for="status">Status</label>
+            <input type="text" id="status" name="status" required>
+
+            <label for="owner">Owner</label>
+            <select id="owner" name="owner" required>
+                <option value="" disabled selected>Select Owner</option>
+                {% for user in users %}
+                <option value="{{ user.username }}">{{ user.username }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Create Asset</button>
         </form>
-
-        <a href="{{ url_for('dashboard') }}" class="back-button">Back to Dashboard</a>
     </div>
 
     <footer>

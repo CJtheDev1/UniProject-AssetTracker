@@ -107,9 +107,11 @@ def create_asset():
         new_asset = Asset(name=name, description=description, status=status, owner=owner)
         db.session.add(new_asset)
         db.session.commit()
+        flash("Asset created successfully!")
         return redirect(url_for('dashboard'))
 
-    return render_template('create_asset.html')
+    users = User.query.all()  # Get all users for the dropdown
+    return render_template('create_asset.html', users=users)
 
 # Asset Detail route
 @app.route('/asset/<int:asset_id>', methods=['GET', 'POST'])

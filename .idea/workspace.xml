@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bde61363-9158-4dde-b6f9-c5eb0010ab2f" name="Changes" comment="Phase 1F Login,Dashboard,Register,accounts changes">
-      <change beforePath="$PROJECT_DIR$/templates/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/create_asset.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/create_asset.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +128,7 @@
       <workItem from="1726228890174" duration="5552000" />
       <workItem from="1726577755309" duration="765000" />
       <workItem from="1726662485876" duration="1735000" />
-      <workItem from="1727014789895" duration="4248000" />
+      <workItem from="1727014789895" duration="4438000" />
     </task>
     <task id="LOCAL-00001" summary="Phase 1">
       <option name="closed" value="true" />
@@ -434,7 +434,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727019586757</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="Phase 1F Login,Dashboard,Register,accounts changes">
+      <option name="closed" value="true" />
+      <created>1727019763117</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1727019763117</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
