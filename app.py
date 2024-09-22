@@ -127,6 +127,9 @@ def user_management():
         user_id = request.form.get('user_id')
         user = User.query.get(user_id)
 
+        if not user:
+            return jsonify({'success': False, 'message': 'User not found.'}), 404
+
         if action == 'delete':
             db.session.delete(user)
             db.session.commit()
