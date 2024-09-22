@@ -59,6 +59,11 @@
             text-decoration: none;
         }
     </style>
+    <script>
+        function updatePermissions(form) {
+            form.submit();
+        }
+    </script>
 </head>
 <body>
 
@@ -79,7 +84,7 @@
                 <td>
                     <form method="POST" style="display:inline;">
                         <input type="hidden" name="user_id" value="{{ user.id }}">
-                        <select name="permissions" onchange="this.form.submit()">
+                        <select name="permissions" onchange="updatePermissions(this.form)">
                             <option value="user" {% if user.permissions == 'user' %}selected{% endif %}>User</option>
                             <option value="admin" {% if user.permissions == 'admin' %}selected{% endif %}>Admin</option>
                         </select>
