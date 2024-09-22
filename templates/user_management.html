@@ -61,10 +61,24 @@
     </style>
     <script>
         function updatePermissions(form) {
-            // Prevent full page refresh
             const actionButton = form.querySelector('button[type="submit"]');
             actionButton.disabled = true; // Disable the button
-            form.submit(); // Submit the form
+
+            const formData = new FormData(form);
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", form.action, true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    // Optionally, handle success response (e.g., show a success message)
+                    actionButton.disabled = false; // Re-enable the button
+                } else {
+                    // Handle error response
+                    alert('Error updating permissions. Please try again.');
+                    actionButton.disabled = false; // Re-enable the button
+                }
+            };
+            xhr.send(formData);
+            return false; // Prevent default form submission
         }
     </script>
 </head>
@@ -85,9 +99,9 @@
             <tr>
                 <td>{{ user.username }}</td>
                 <td>
-                    <form method="POST" style="display:inline;">
+                    <form method="POST" style="display:inline;" onsubmit="return updatePermissions(this);">
                         <input type="hidden" name="user_id" value="{{ user.id }}">
-                        <select name="permissions" onchange="updatePermissions(this.form)">
+                        <select name="permissions">
                             <option value="user" {% if user.permissions == 'user' %}selected{% endif %}>User</option>
                             <option value="admin" {% if user.permissions == 'admin' %}selected{% endif %}>Admin</option>
                         </select>

@@ -1,6 +1,6 @@
 import os
 import re
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import bcrypt
@@ -131,13 +131,15 @@ def user_management():
             db.session.delete(user)
             db.session.commit()
             flash(f"User '{user.username}' deleted successfully!")
+            return jsonify({'success': True, 'message': f"User '{user.username}' deleted successfully!"})
         elif action == 'update' and request.form.get('permissions'):
             new_permissions = request.form.get('permissions')
             user.permissions = new_permissions
             db.session.commit()
             flash(f"User '{user.username}' permissions updated to '{new_permissions}'.")
+            return jsonify({'success': True, 'message': f"User '{user.username}' permissions updated to '{new_permissions}'."})
 
-        return redirect(url_for('user_management'))
+        return jsonify({'success': False, 'message': 'Invalid action or missing permissions.'}), 400
 
     return render_template('user_management.html', users=users)
 
