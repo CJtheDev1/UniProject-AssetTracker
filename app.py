@@ -8,23 +8,23 @@ import bcrypt
 app = Flask(__name__)
 app.secret_key = 'f38b0e0a7f7b4f97a2b9a2f6c128b8d3'  # Your secret key
 
-# Updated PostgreSQL database configuration using psycopg2 driver
+# PostgreSQL database configuration
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://default:7PncvCB6DHOd@ep-orange-night-a4sgorcj.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Disable the modification tracking
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize SQLAlchemy and Flask-Migrate
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-# Define the User model with the specified table name
+# User model
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
-    permissions = db.Column(db.String(255), default='user')  # New permissions column
+    permissions = db.Column(db.String(255), default='user')
 
-# Define the Asset model
+# Asset model
 class Asset(db.Model):
     __tablename__ = 'assets'
     id = db.Column(db.Integer, primary_key=True)
@@ -36,7 +36,7 @@ class Asset(db.Model):
     def __repr__(self):
         return f'<Asset {self.name}>'
 
-# Password validation function
+# Password validation
 def validate_password(password):
     if len(password) < 8:
         return "Password must be at least 8 characters long."
@@ -58,8 +58,9 @@ def login():
 
         user = User.query.filter_by(username=username).first()
         if user and bcrypt.checkpw(password.encode('utf-8'), user.password_hash.encode('utf-8')):
-            session['username'] = username  # Store username in session
-            session['permissions'] = user.permissions  # Store permissions in session
+            session['username'] = username
+            session['permissions'] = user.permissions
+            session['user_id'] = user.id  # Store user ID in session
             return redirect(url_for('dashboard'))
         flash("Invalid username or password.")
 
@@ -93,9 +94,10 @@ def register():
 # Dashboard route
 @app.route('/dashboard')
 def dashboard():
-    username = session.get('username', 'Guest')  # Get username from session
+    username = session.get('username', 'Guest')
+    permissions = session.get('permissions', 'user')  # Get permissions from session
     assets = Asset.query.all()
-    return render_template('dashboard.html', assets=assets, username=username)
+    return render_template('dashboard.html', assets=assets, username=username, permissions=permissions)
 
 # Create Asset route
 @app.route('/create_asset', methods=['GET', 'POST'])
@@ -112,13 +114,13 @@ def create_asset():
         flash("Asset created successfully!")
         return redirect(url_for('dashboard'))
 
-    users = User.query.all()  # Get all users for the dropdown
+    users = User.query.all()
     return render_template('create_asset.html', users=users)
 
 # User Management route
 @app.route('/user_management', methods=['GET', 'POST'])
 def user_management():
-    users = User.query.all()  # Get all users
+    users = User.query.all()
 
     if request.method == 'POST':
         action = request.form.get('action')
@@ -130,7 +132,6 @@ def user_management():
             db.session.commit()
             flash(f"User '{user.username}' deleted successfully!")
         elif action == 'update' and request.form.get('permissions'):
-            # Update permissions
             new_permissions = request.form.get('permissions')
             user.permissions = new_permissions
             db.session.commit()
@@ -139,7 +140,6 @@ def user_management():
         return redirect(url_for('user_management'))
 
     return render_template('user_management.html', users=users)
-
 
 # Asset Detail route
 @app.route('/asset/<int:asset_id>', methods=['GET', 'POST'])
@@ -172,8 +172,9 @@ def asset_detail(asset_id):
 # Logout route
 @app.route('/logout')
 def logout():
-    session.pop('username', None)  # Clear username from session
-    session.pop('permissions', None)  # Clear permissions from session
+    session.pop('username', None)
+    session.pop('permissions', None)
+    session.pop('user_id', None)  # Clear user ID from session
     return redirect(url_for('home'))
 
 if __name__ == '__main__':

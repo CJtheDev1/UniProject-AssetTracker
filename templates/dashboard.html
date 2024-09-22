@@ -6,15 +6,64 @@
     <title>Asset Tracker Dashboard</title>
     <style>
         /* Add your existing styles here */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #1e90ff;
+            padding: 10px;
+            color: white;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        .user-email {
+            margin-right: 20px;
+        }
+        .asset-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .asset-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: white;
+            width: 200px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .add-asset {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 24px;
+            text-decoration: none;
+            background-color: #1e90ff;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
-    <div class="background"></div>
     <header>
-        Asset Tracker Dashboard
+        <h1>Asset Tracker Dashboard</h1>
         <div class="user-info">
             <div class="user-email">Signed In As: {{ username }}</div>
-            {% if user.permissions == 'admin' %}
+            {% if permissions == 'admin' %}
             <a href="/user_management" title="User Management">
                 <img src="https://img.icons8.com/ios-filled/50/ffffff/user.png" class="user-icon" alt="User Management Icon">
             </a>
