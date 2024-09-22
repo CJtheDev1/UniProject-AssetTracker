@@ -68,8 +68,6 @@
             actionButton.disabled = true; // Disable the button
 
             const formData = new FormData(form);
-
-            // Correct the action URL
             const url = form.getAttribute('action'); // Get correct action URL from the form
 
             const xhr = new XMLHttpRequest();
@@ -81,8 +79,11 @@
                     alert(response.message);
                     location.reload(); // Refresh the page to see updates
                 } else {
-                    alert('Error updating permissions. Please try again.');
+                    alert('Error updating permissions: ' + xhr.responseText);
                 }
+            };
+            xhr.onerror = function () {
+                alert('Request failed. Please check your network connection.');
             };
             xhr.send(formData);
             return false; // Prevent default form submission
@@ -106,7 +107,6 @@
             <tr>
                 <td>{{ user.username }}</td>
                 <td>
-                    <!-- Updated the form action and method properly -->
                     <form method="POST" action="{{ url_for('user_management') }}" style="display:inline;" onsubmit="return updatePermissions(this);">
                         <input type="hidden" name="user_id" value="{{ user.id }}">
                         <select name="permissions">

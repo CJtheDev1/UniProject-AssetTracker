@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bde61363-9158-4dde-b6f9-c5eb0010ab2f" name="Changes" comment="Phase 1H fixes for dashboard to usermanagement also lockoff for users compared to admins" />
+    <list default="true" id="bde61363-9158-4dde-b6f9-c5eb0010ab2f" name="Changes" comment="Phase 1H fixes for dashboard to usermanagement also lockoff for users compared to admins">
+      <change beforePath="$PROJECT_DIR$/templates/user_management.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user_management.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -127,15 +129,7 @@
       <workItem from="1726577755309" duration="765000" />
       <workItem from="1726662485876" duration="1735000" />
       <workItem from="1727014789895" duration="8510000" />
-      <workItem from="1727033614877" duration="765000" />
-    </task>
-    <task id="LOCAL-00012" summary="Phase 1B">
-      <option name="closed" value="true" />
-      <created>1726218935740</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1726218935740</updated>
+      <workItem from="1727033614877" duration="939000" />
     </task>
     <task id="LOCAL-00013" summary="Phase 1B">
       <option name="closed" value="true" />
@@ -521,7 +515,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727034288332</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="Phase 1H fixes for dashboard to usermanagement also lockoff for users compared to admins">
+      <option name="closed" value="true" />
+      <created>1727034406035</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1727034406035</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
