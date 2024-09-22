@@ -63,17 +63,14 @@
         }
     </style>
     <script>
-        function updatePermissions(form) {
-            const actionButton = form.querySelector('button[type="submit"]');
-            actionButton.disabled = true; // Disable the button
-
-            const formData = new FormData(form);
-            const url = form.getAttribute('action'); // Get action URL from the form
+        function updatePermissions(userId) {
+            const permissionsSelect = document.getElementById(`permissions-${userId}`);
+            const newPermissions = permissionsSelect.value;
 
             const xhr = new XMLHttpRequest();
-            xhr.open("POST", url, true); // Use correct URL here
+            xhr.open("POST", "{{ url_for('user_management') }}", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             xhr.onload = function () {
-                actionButton.disabled = false; // Re-enable the button
                 const response = JSON.parse(xhr.responseText);
                 if (xhr.status === 200) {
                     alert(response.message);
@@ -83,11 +80,9 @@
                 }
             };
             xhr.onerror = function () {
-                actionButton.disabled = false; // Re-enable the button
                 alert('Request failed. Please check your network connection.');
             };
-            xhr.send(formData);
-            return false; // Prevent default form submission
+            xhr.send(`user_id=${userId}&permissions=${newPermissions}&action=update`);
         }
     </script>
 </head>
@@ -108,14 +103,11 @@
             <tr>
                 <td>{{ user.username }}</td>
                 <td>
-                    <form method="POST" action="{{ url_for('user_management') }}" style="display:inline;" onsubmit="return updatePermissions(this);">
-                        <input type="hidden" name="user_id" value="{{ user.id }}">
-                        <select name="permissions">
-                            <option value="user" {% if user.permissions == 'user' %}selected{% endif %}>User</option>
-                            <option value="admin" {% if user.permissions == 'admin' %}selected{% endif %}>Admin</option>
-                        </select>
-                        <button type="submit" name="action" value="update" class="btn btn-warning">Update</button>
-                    </form>
+                    <select id="permissions-{{ user.id }}">
+                        <option value="user" {% if user.permissions == 'user' %}selected{% endif %}>User</option>
+                        <option value="admin" {% if user.permissions == 'admin' %}selected{% endif %}>Admin</option>
+                    </select>
+                    <button type="button" class="btn btn-warning" onclick="updatePermissions({{ user.id }});">Update</button>
                 </td>
                 <td>
                     <form method="POST" action="{{ url_for('user_management') }}" style="display:inline;">

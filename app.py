@@ -9,12 +9,14 @@ app = Flask(__name__)
 app.secret_key = 'f38b0e0a7f7b4f97a2b9a2f6c128b8d3'  # Your secret key
 
 # PostgreSQL database configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://default:7PncvCB6DHOd@ep-orange-night-a4sgorcj.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require'
+app.config[
+    'SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://default:7PncvCB6DHOd@ep-orange-night-a4sgorcj.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize SQLAlchemy and Flask-Migrate
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+
 
 # User model
 class User(db.Model):
@@ -23,6 +25,7 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
     permissions = db.Column(db.String(255), default='user')
+
 
 # Asset model
 class Asset(db.Model):
@@ -36,6 +39,7 @@ class Asset(db.Model):
     def __repr__(self):
         return f'<Asset {self.name}>'
 
+
 # Password validation
 def validate_password(password):
     if len(password) < 8:
@@ -44,10 +48,12 @@ def validate_password(password):
         return "Password must contain at least one special character."
     return None
 
+
 # Home route
 @app.route('/')
 def home():
     return render_template('home.html')
+
 
 # Login route
 @app.route('/login', methods=['GET', 'POST'])
@@ -65,6 +71,7 @@ def login():
         flash("Invalid username or password.")
 
     return render_template('login.html')
+
 
 # Register route
 @app.route('/register', methods=['GET', 'POST'])
@@ -91,6 +98,7 @@ def register():
 
     return render_template('register.html')
 
+
 # Dashboard route
 @app.route('/dashboard')
 def dashboard():
@@ -98,6 +106,7 @@ def dashboard():
     permissions = session.get('permissions', 'user')  # Get permissions from session
     assets = Asset.query.all()
     return render_template('dashboard.html', assets=assets, username=username, permissions=permissions)
+
 
 # Create Asset route
 @app.route('/create_asset', methods=['GET', 'POST'])
@@ -117,18 +126,15 @@ def create_asset():
     users = User.query.all()
     return render_template('create_asset.html', users=users)
 
+
 # User Management route
 @app.route('/user_management', methods=['GET', 'POST'])
 def user_management():
     users = User.query.all()
 
     if request.method == 'POST':
-        # Get form values
-        action = request.form.get('action')
         user_id = request.form.get('user_id')
         new_permissions = request.form.get('permissions')
-
-        print(f"Received action: {action}, user_id: {user_id}, new_permissions: {new_permissions}")  # Debugging line
 
         user = User.query.get(user_id)
 
@@ -136,22 +142,22 @@ def user_management():
         if not user:
             return jsonify({'success': False, 'message': 'User not found.'}), 404
 
-        # Handle actions
-        if action == 'delete':
+        if request.form.get('action') == 'delete':
             db.session.delete(user)
             db.session.commit()
             return jsonify({'success': True, 'message': f"User '{user.username}' deleted successfully!"}), 200
-        elif action == 'update':
-            if new_permissions:
-                user.permissions = new_permissions
-                db.session.commit()
-                return jsonify({'success': True, 'message': f"User '{user.username}' permissions updated to '{new_permissions}'."}), 200
-            else:
-                return jsonify({'success': False, 'message': 'Permissions are required for update.'}), 400
 
-        return jsonify({'success': False, 'message': 'Invalid action.'}), 400
+        # Update permissions
+        if new_permissions:
+            user.permissions = new_permissions
+            db.session.commit()
+            return jsonify({'success': True,
+                            'message': f"User '{user.username}' permissions updated to '{new_permissions}'."}), 200
+
+        return jsonify({'success': False, 'message': 'Invalid action or permissions missing.'}), 400
 
     return render_template('user_management.html', users=users)
+
 
 # Asset Detail route
 @app.route('/asset/<int:asset_id>', methods=['GET', 'POST'])
@@ -181,6 +187,7 @@ def asset_detail(asset_id):
 
     return render_template('asset_detail.html', asset=asset, asset_id=asset_id)
 
+
 # Logout route
 @app.route('/logout')
 def logout():
@@ -189,6 +196,6 @@ def logout():
     session.pop('user_id', None)  # Clear user ID from session
     return redirect(url_for('home'))
 
+
 if __name__ == '__main__':
     app.run(debug=True)
-
