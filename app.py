@@ -22,6 +22,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
+    permissions = db.Column(db.String(255), default='user')  # New permissions column
 
 # Define the Asset model
 class Asset(db.Model):
@@ -58,6 +59,7 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user and bcrypt.checkpw(password.encode('utf-8'), user.password_hash.encode('utf-8')):
             session['username'] = username  # Store username in session
+            session['permissions'] = user.permissions  # Store permissions in session
             return redirect(url_for('dashboard'))
         flash("Invalid username or password.")
 
@@ -113,6 +115,30 @@ def create_asset():
     users = User.query.all()  # Get all users for the dropdown
     return render_template('create_asset.html', users=users)
 
+# User Management route
+@app.route('/user_management', methods=['GET', 'POST'])
+def user_management():
+    users = User.query.all()  # Get all users
+
+    if request.method == 'POST':
+        action = request.form.get('action')
+        user_id = request.form.get('user_id')
+        user = User.query.get(user_id)
+
+        if action == 'delete':
+            db.session.delete(user)
+            db.session.commit()
+            flash(f"User '{user.username}' deleted successfully!")
+        elif action == 'ban':
+            # Add ban logic here (e.g., set permissions to 'banned' or similar)
+            user.permissions = 'banned'
+            db.session.commit()
+            flash(f"User '{user.username}' has been banned.")
+
+        return redirect(url_for('user_management'))
+
+    return render_template('user_management.html', users=users)
+
 # Asset Detail route
 @app.route('/asset/<int:asset_id>', methods=['GET', 'POST'])
 def asset_detail(asset_id):
@@ -145,6 +171,7 @@ def asset_detail(asset_id):
 @app.route('/logout')
 def logout():
     session.pop('username', None)  # Clear username from session
+    session.pop('permissions', None)  # Clear permissions from session
     return redirect(url_for('home'))
 
 if __name__ == '__main__':
