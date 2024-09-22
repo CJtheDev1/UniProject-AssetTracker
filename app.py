@@ -128,6 +128,8 @@ def user_management():
         user_id = request.form.get('user_id')
         new_permissions = request.form.get('permissions')
 
+        print(f"Received action: {action}, user_id: {user_id}, new_permissions: {new_permissions}")  # Debugging line
+
         user = User.query.get(user_id)
 
         # Handle user not found

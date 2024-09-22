@@ -68,21 +68,22 @@
             actionButton.disabled = true; // Disable the button
 
             const formData = new FormData(form);
-            const url = form.getAttribute('action'); // Get correct action URL from the form
+            const url = form.getAttribute('action'); // Get action URL from the form
 
             const xhr = new XMLHttpRequest();
             xhr.open("POST", url, true); // Use correct URL here
             xhr.onload = function () {
                 actionButton.disabled = false; // Re-enable the button
+                const response = JSON.parse(xhr.responseText);
                 if (xhr.status === 200) {
-                    const response = JSON.parse(xhr.responseText);
                     alert(response.message);
                     location.reload(); // Refresh the page to see updates
                 } else {
-                    alert('Error updating permissions: ' + xhr.responseText);
+                    alert('Error updating permissions: ' + response.message || xhr.responseText);
                 }
             };
             xhr.onerror = function () {
+                actionButton.disabled = false; // Re-enable the button
                 alert('Request failed. Please check your network connection.');
             };
             xhr.send(formData);
