@@ -9,12 +9,14 @@ app = Flask(__name__)
 app.secret_key = 'f38b0e0a7f7b4f97a2b9a2f6c128b8d3'  # Your secret key
 
 # Updated PostgreSQL database configuration using psycopg2 driver
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://default:7PncvCB6DHOd@ep-orange-night-a4sgorcj.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require'
+app.config[
+    'SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://default:7PncvCB6DHOd@ep-orange-night-a4sgorcj.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Disable the modification tracking
 
 # Initialize SQLAlchemy and Flask-Migrate
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+
 
 # Define the User model with the specified table name
 class User(db.Model):
@@ -23,13 +25,20 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
 
+
 # Define the Asset model
 class Asset(db.Model):
+    __tablename__ = 'assets'  # Set the table name to 'assets'
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(200), nullable=False)
     status = db.Column(db.String(50), nullable=False)
     owner = db.Column(db.String(100), nullable=False)
+
+    def __repr__(self):
+        return f'<Asset {self.name}>'
+
 
 # Password validation function
 def validate_password(password):
@@ -40,10 +49,12 @@ def validate_password(password):
         return "Password must contain at least one special character."
     return None
 
+
 # Home route
 @app.route('/')
 def home():
     return render_template('home.html')
+
 
 # Login route
 @app.route('/login', methods=['GET', 'POST'])
@@ -58,6 +69,7 @@ def login():
         flash("Invalid username or password.")
 
     return render_template('login.html')
+
 
 # Register route
 @app.route('/register', methods=['GET', 'POST'])
@@ -84,12 +96,14 @@ def register():
 
     return render_template('register.html')
 
+
 # Dashboard route
 @app.route('/dashboard')
 def dashboard():
     user_email = request.args.get('user_email', 'Guest')
     assets = Asset.query.all()
     return render_template('dashboard.html', assets=assets, user_email=user_email)
+
 
 # Create Asset route
 @app.route('/create_asset', methods=['GET', 'POST'])
@@ -106,6 +120,7 @@ def create_asset():
         return redirect(url_for('dashboard'))
 
     return render_template('create_asset.html')
+
 
 # Asset Detail route
 @app.route('/asset/<int:asset_id>', methods=['GET', 'POST'])
@@ -137,10 +152,12 @@ def asset_detail(asset_id):
 
     return render_template('asset_detail.html', asset=asset, asset_id=asset_id)
 
+
 # Logout route
 @app.route('/logout')
 def logout():
     return redirect(url_for('home'))
+
 
 if __name__ == '__main__':
     app.run(debug=True)
