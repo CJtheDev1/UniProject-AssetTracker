@@ -18,7 +18,7 @@ migrate = Migrate(app, db)
 
 # Define the User model with the specified table name
 class User(db.Model):
-    __tablename__ = 'Users'  # Set the table name
+    __tablename__ = 'users'  # Set the table name
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
