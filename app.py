@@ -8,16 +8,17 @@ import bcrypt
 app = Flask(__name__)
 app.secret_key = 'f38b0e0a7f7b4f97a2b9a2f6c128b8d3'  # Your secret key
 
-# PostgreSQL database configuration using pg8000 driver
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+pg8000://default:7PncvCB6DHOd@ep-orange-night-a4sgorcj-pooler.us-east-1.aws.neon.tech/verceldb?sslmode=require'
+# Updated PostgreSQL database configuration using pg8000 driver
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+pg8000://default:7PncvCB6DHOd@ep-orange-night-a4sgorcj.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Disable the modification tracking
 
 # Initialize SQLAlchemy and Flask-Migrate
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-# Define the User model
+# Define the User model with the specified table name
 class User(db.Model):
+    __tablename__ = 'Users'  # Set the table name
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
