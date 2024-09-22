@@ -69,13 +69,14 @@
             xhr.open("POST", form.action, true);
             xhr.onload = function () {
                 if (xhr.status === 200) {
-                    // Optionally, handle success response (e.g., show a success message)
-                    actionButton.disabled = false; // Re-enable the button
+                    // Handle success response
+                    const response = JSON.parse(xhr.responseText);
+                    alert(response.message);
                 } else {
                     // Handle error response
                     alert('Error updating permissions. Please try again.');
-                    actionButton.disabled = false; // Re-enable the button
                 }
+                actionButton.disabled = false; // Re-enable the button
             };
             xhr.send(formData);
             return false; // Prevent default form submission
@@ -99,7 +100,7 @@
             <tr>
                 <td>{{ user.username }}</td>
                 <td>
-                    <form method="POST" style="display:inline;" onsubmit="return updatePermissions(this);">
+                    <form method="POST" action="{{ url_for('user_management') }}" style="display:inline;" onsubmit="return updatePermissions(this);">
                         <input type="hidden" name="user_id" value="{{ user.id }}">
                         <select name="permissions">
                             <option value="user" {% if user.permissions == 'user' %}selected{% endif %}>User</option>
@@ -109,7 +110,7 @@
                     </form>
                 </td>
                 <td>
-                    <form method="POST" style="display:inline;">
+                    <form method="POST" action="{{ url_for('user_management') }}" style="display:inline;">
                         <input type="hidden" name="user_id" value="{{ user.id }}">
                         <button type="submit" name="action" value="delete" class="btn btn-danger">Delete</button>
                     </form>

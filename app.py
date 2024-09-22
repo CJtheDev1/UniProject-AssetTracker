@@ -130,14 +130,12 @@ def user_management():
         if action == 'delete':
             db.session.delete(user)
             db.session.commit()
-            flash(f"User '{user.username}' deleted successfully!")
-            return jsonify({'success': True, 'message': f"User '{user.username}' deleted successfully!"})
+            return jsonify({'success': True, 'message': f"User '{user.username}' deleted successfully!"}), 200
         elif action == 'update' and request.form.get('permissions'):
             new_permissions = request.form.get('permissions')
             user.permissions = new_permissions
             db.session.commit()
-            flash(f"User '{user.username}' permissions updated to '{new_permissions}'.")
-            return jsonify({'success': True, 'message': f"User '{user.username}' permissions updated to '{new_permissions}'."})
+            return jsonify({'success': True, 'message': f"User '{user.username}' permissions updated to '{new_permissions}'."}), 200
 
         return jsonify({'success': False, 'message': 'Invalid action or missing permissions.'}), 400
 

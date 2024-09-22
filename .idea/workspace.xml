@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bde61363-9158-4dde-b6f9-c5eb0010ab2f" name="Changes" comment="Phase 1H fixes for dashboard to usermanagement also lockoff for users compared to admins">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user_management.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user_management.html" afterDir="false" />
-    </list>
+    <list default="true" id="bde61363-9158-4dde-b6f9-c5eb0010ab2f" name="Changes" comment="Phase 1H fixes for dashboard to usermanagement also lockoff for users compared to admins" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -129,15 +126,7 @@
       <workItem from="1726228890174" duration="5552000" />
       <workItem from="1726577755309" duration="765000" />
       <workItem from="1726662485876" duration="1735000" />
-      <workItem from="1727014789895" duration="7275000" />
-    </task>
-    <task id="LOCAL-00006" summary="Phase 1A">
-      <option name="closed" value="true" />
-      <created>1726217386948</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1726217386948</updated>
+      <workItem from="1727014789895" duration="7441000" />
     </task>
     <task id="LOCAL-00007" summary="Phase 1A Home page changes">
       <option name="closed" value="true" />
@@ -523,7 +512,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727022659996</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="Phase 1H fixes for dashboard to usermanagement also lockoff for users compared to admins">
+      <option name="closed" value="true" />
+      <created>1727022879554</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1727022879554</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
