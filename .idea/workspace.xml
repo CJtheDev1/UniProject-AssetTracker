@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bde61363-9158-4dde-b6f9-c5eb0010ab2f" name="Changes" comment="Phase 1E Postgres updated complete with no SQL import">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/create_asset.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/create_asset.html" afterDir="false" />
+    <list default="true" id="bde61363-9158-4dde-b6f9-c5eb0010ab2f" name="Changes" comment="Phase 1F Login,Dashboard,Register,accounts changes">
       <change beforePath="$PROJECT_DIR$/templates/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -131,7 +128,7 @@
       <workItem from="1726228890174" duration="5552000" />
       <workItem from="1726577755309" duration="765000" />
       <workItem from="1726662485876" duration="1735000" />
-      <workItem from="1727014789895" duration="3876000" />
+      <workItem from="1727014789895" duration="4077000" />
     </task>
     <task id="LOCAL-00001" summary="Phase 1">
       <option name="closed" value="true" />
@@ -421,7 +418,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727017784673</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="Phase 1F Login,Dashboard,Register,accounts changes">
+      <option name="closed" value="true" />
+      <created>1727019401737</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1727019401737</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -447,7 +452,8 @@
     <MESSAGE value="Phase 1C" />
     <MESSAGE value="Phase 1D Postgres updated" />
     <MESSAGE value="Phase 1E Postgres updated complete with no SQL import" />
-    <option name="LAST_COMMIT_MESSAGE" value="Phase 1E Postgres updated complete with no SQL import" />
+    <MESSAGE value="Phase 1F Login,Dashboard,Register,accounts changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Phase 1F Login,Dashboard,Register,accounts changes" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/UniProject_AssetTracker$UniProject_AssetTracker.coverage" NAME="UniProject-AssetTracker Coverage Results" MODIFIED="1726063757125" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
