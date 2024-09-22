@@ -7,16 +7,14 @@ import bcrypt
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Required for flashing messages
 
-# PostgreSQL database configuration using pg8000 driver
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+pg8000://default:your_password@ep-orange-night-a4sgorcj.us-east-1.aws.neon.tech:5432/verceldb'
+# Updated PostgreSQL database configuration using pg8000 driver
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+pg8000://default:7PncvCB6DHOd@ep-orange-night-a4sgorcj.us-east-1.aws.neon.tech:5432/verceldb'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Disable the modification tracking
 
 # SSL configuration for pg8000
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
     'connect_args': {
-        'ssl': {
-            'sslmode': 'require'  # Enforces SSL connection
-        }
+        'ssl': True  # Enable SSL for pg8000
     }
 }
 
