@@ -10,7 +10,6 @@
             margin: 0;
             padding: 0;
             color: #fff;
-            overflow: hidden;
         }
 
         .background {
@@ -29,57 +28,34 @@
             color: white;
             padding: 20px;
             text-align: center;
-            font-size: 2.5em;
+            font-size: 2em;
             font-weight: bold;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
         }
 
         .container {
-            padding: 30px 50px;
+            padding: 40px;
             text-align: center;
             z-index: 1;
             position: relative;
             color: white;
         }
 
-        h1 {
-            color: #1e90ff;
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
-
-        form {
-            background-color: rgba(255, 255, 255, 0.9);
-            color: #333;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        label {
-            display: block;
-            margin: 15px 0 5px;
-            font-weight: bold;
-        }
-
         input, select {
-            width: 100%;
             padding: 10px;
+            margin: 10px;
+            width: 300px;
             border-radius: 5px;
             border: 1px solid #ccc;
-            margin-bottom: 15px;
-            font-size: 1em;
         }
 
         button {
             background-color: #1e90ff;
             color: white;
-            padding: 10px 20px;
             border: none;
+            padding: 10px 20px;
             border-radius: 5px;
-            font-size: 1.2em;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            font-size: 1em;
         }
 
         button:hover {
@@ -95,45 +71,44 @@
             width: 100%;
             text-align: center;
             z-index: 10;
-            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.4);
         }
     </style>
 </head>
 <body>
 
-    <div class="background"></div>
+<div class="background"></div>
 
-    <header>
-        Create New Asset
-    </header>
+<header>
+    Create New Asset
+</header>
 
-    <div class="container">
-        <h1>New Asset Form</h1>
-        <form action="{{ url_for('create_asset') }}" method="POST">
-            <label for="name">Asset Name</label>
-            <input type="text" id="name" name="name" required>
+<div class="container">
+    <form action="{{ url_for('create_asset') }}" method="POST">
+        <input type="text" name="name" placeholder="Asset Name" required>
+        <input type="text" name="description" placeholder="Asset Description" required>
 
-            <label for="description">Description</label>
-            <input type="text" id="description" name="description" required>
+        <label for="status">Status:</label>
+        <select name="status" required>
+            <option value="In Use">In Use</option>
+            <option value="Sold">Sold</option>
+            <option value="Stored">Stored</option>
+            <option value="In Maintenance">In Maintenance</option>
+        </select>
 
-            <label for="status">Status</label>
-            <input type="text" id="status" name="status" required>
-
-            <label for="owner">Owner</label>
-            <select id="owner" name="owner" required>
-                <option value="" disabled selected>Select Owner</option>
-                {% for user in users %}
+        <label for="owner">Owner:</label>
+        <select name="owner" required>
+            {% for user in users %}
                 <option value="{{ user.username }}">{{ user.username }}</option>
-                {% endfor %}
-            </select>
+            {% endfor %}
+        </select>
 
-            <button type="submit">Create Asset</button>
-        </form>
-    </div>
+        <button type="submit">Create Asset</button>
+    </form>
+</div>
 
-    <footer>
-        &copy; 2024 Asset Tracker. All rights reserved.
-    </footer>
+<footer>
+    &copy; 2024 Asset Tracker. All rights reserved.
+</footer>
 
 </body>
 </html>
