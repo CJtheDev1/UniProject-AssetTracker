@@ -9,118 +9,89 @@
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
-            padding: 0;
-            overflow: hidden;
-            color: #fff;
-        }
-
-        .background {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
+            padding: 20px;
+            color: #333;
             background: url('https://pictureforuni.s3.eu-north-1.amazonaws.com/untitled-2.gif') no-repeat center center fixed;
             background-size: cover;
-            z-index: -1;
         }
-
-        .container {
-            padding: 20px;
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 10px;
-            max-width: 800px;
-            margin: 50px auto;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-        }
-
         h1 {
-            text-align: center;
             color: #1e90ff;
             margin-bottom: 20px;
         }
-
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
         }
-
         th, td {
             padding: 12px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
-
         th {
             background-color: #007bff;
             color: white;
         }
-
         .btn {
             padding: 8px 12px;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            margin-right: 5px;
         }
-
         .btn-danger {
             background-color: #dc3545;
         }
-
         .btn-warning {
             background-color: #ffc107;
         }
-
-        .permission-select {
-            padding: 5px;
-            border-radius: 4px;
-            border: none;
-            cursor: pointer;
+        .back-button {
+            background-color: #1e90ff;
+            margin-top: 20px;
+            display: inline-block;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
 
-    <div class="background"></div>
+<h1>User Management</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Permissions</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.username }}</td>
+            <td>
+                <form method="POST" style="display:inline;">
+                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                    <select name="permissions" onchange="this.form.submit()">
+                        <option value="user" {% if user.permissions == 'user' %}selected{% endif %}>User</option>
+                        <option value="admin" {% if user.permissions == 'admin' %}selected{% endif %}>Admin</option>
+                        <option value="banned" {% if user.permissions == 'banned' %}selected{% endif %}>Banned</option>
+                    </select>
+                    <button type="submit" name="action" value="update" class="btn btn-warning">Update</button>
+                </form>
+            </td>
+            <td>
+                <form method="POST" style="display:inline;">
+                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                    <button type="submit" name="action" value="delete" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
-    <div class="container">
-        <h1>User Management</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Permissions</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for user in users %}
-                <tr>
-                    <td>{{ user.username }}</td>
-                    <td>
-                        <form method="POST" style="display:inline;">
-                            <select name="permissions" class="permission-select" onchange="this.form.submit()">
-                                <option value="user" {% if user.permissions == 'user' %}selected{% endif %}>User</option>
-                                <option value="admin" {% if user.permissions == 'admin' %}selected{% endif %}>Admin</option>
-                                <option value="moderator" {% if user.permissions == 'moderator' %}selected{% endif %}>Moderator</option>
-                            </select>
-                            <input type="hidden" name="user_id" value="{{ user.id }}">
-                        </form>
-                    </td>
-                    <td>
-                        <form method="POST" style="display:inline;">
-                            <input type="hidden" name="user_id" value="{{ user.id }}">
-                            <button type="submit" name="action" value="ban" class="btn btn-warning">Ban</button>
-                            <button type="submit" name="action" value="delete" class="btn btn-danger">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+<a href="{{ url_for('dashboard') }}" class="back-button btn">Back to Dashboard</a>
 
 </body>
 </html>
