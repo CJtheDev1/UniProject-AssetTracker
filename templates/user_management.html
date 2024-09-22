@@ -69,13 +69,11 @@
 
             const formData = new FormData(form);
 
-            // Log form data for debugging
-            for (var pair of formData.entries()) {
-                console.log(pair[0]+ ': ' + pair[1]);
-            }
+            // Correct the action URL
+            const url = form.getAttribute('action'); // Get correct action URL from the form
 
             const xhr = new XMLHttpRequest();
-            xhr.open("POST", form.action, true);
+            xhr.open("POST", url, true); // Use correct URL here
             xhr.onload = function () {
                 actionButton.disabled = false; // Re-enable the button
                 if (xhr.status === 200) {
@@ -108,6 +106,7 @@
             <tr>
                 <td>{{ user.username }}</td>
                 <td>
+                    <!-- Updated the form action and method properly -->
                     <form method="POST" action="{{ url_for('user_management') }}" style="display:inline;" onsubmit="return updatePermissions(this);">
                         <input type="hidden" name="user_id" value="{{ user.id }}">
                         <select name="permissions">
