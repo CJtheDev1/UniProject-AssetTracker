@@ -8,8 +8,8 @@ import bcrypt
 app = Flask(__name__)
 app.secret_key = 'f38b0e0a7f7b4f97a2b9a2f6c128b8d3'  # Your secret key
 
-# Updated PostgreSQL database configuration using pg8000 driver
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+pg8000://default:7PncvCB6DHOd@ep-orange-night-a4sgorcj.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require'
+# Updated PostgreSQL database configuration using psycopg2 driver
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://default:7PncvCB6DHOd@ep-orange-night-a4sgorcj.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Disable the modification tracking
 
 # Initialize SQLAlchemy and Flask-Migrate
@@ -144,4 +144,3 @@ def logout():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
