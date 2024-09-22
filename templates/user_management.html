@@ -61,7 +61,10 @@
     </style>
     <script>
         function updatePermissions(form) {
-            form.submit();
+            // Prevent full page refresh
+            const actionButton = form.querySelector('button[type="submit"]');
+            actionButton.disabled = true; // Disable the button
+            form.submit(); // Submit the form
         }
     </script>
 </head>

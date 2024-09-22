@@ -5,189 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asset Tracker Dashboard</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            color: #fff;
-        }
-
-        .background {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            background: url('https://pictureforuni.s3.eu-north-1.amazonaws.com/untitled-2.gif') no-repeat center center fixed;
-            background-size: cover;
-            z-index: -1;
-        }
-
-        header {
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 20px;
-            text-align: center;
-            font-size: 2.5em;
-            font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-            position: relative;
-            z-index: 100;
-        }
-
-        header .user-info {
-            display: flex;
-            align-items: center;
-        }
-
-        .user-email {
-            margin-right: 20px;
-            font-size: 1.1em;
-        }
-
-        .logout {
-            background-color: #ff6347;
-            padding: 8px 15px;  /* Adjusted padding for smaller size */
-            border-radius: 5px;
-            color: white;
-            text-decoration: none;
-            font-size: 0.9em;    /* Adjusted font size for smaller size */
-            transition: background-color 0.3s ease;
-        }
-
-        .logout:hover {
-            background-color: #ff4500;
-        }
-
-        .user-icon {
-            width: 30px;
-            height: 30px;
-            margin-left: 10px;
-            cursor: pointer;
-        }
-
-        .content-wrapper {
-            overflow-y: auto;
-            max-height: calc(100vh - 160px);
-            padding: 20px;
-        }
-
-        .container {
-            padding: 30px 50px;
-            text-align: center;
-            z-index: 1;
-            position: relative;
-            color: white;
-        }
-
-        h1 {
-            color: #1e90ff;
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
-
-        .description {
-            font-size: 1.2em;
-            color: #ddd;
-            margin-bottom: 40px;
-        }
-
-        .asset-grid {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 30px;
-        }
-
-        .asset-card {
-            background-color: rgba(255, 255, 255, 0.9);
-            color: #333;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            padding: 20px;
-            width: 300px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            text-align: left;
-        }
-
-        .asset-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-        }
-
-        .asset-card h3 {
-            color: #1e90ff;
-            margin-bottom: 10px;
-        }
-
-        .asset-card p {
-            font-size: 1em;
-            margin-bottom: 15px;
-        }
-
-        .asset-card a {
-            background-color: #1e90ff;
-            color: white;
-            padding: 10px 15px;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-            display: inline-block;
-        }
-
-        .asset-card a:hover {
-            background-color: #4682b4;
-        }
-
-        .add-asset {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #1e90ff;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2em;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            z-index: 10;
-        }
-
-        .add-asset:hover {
-            background-color: #4682b4;
-        }
-
-        footer {
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 10px 0;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            text-align: center;
-            z-index: 10;
-            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.4);
-        }
+        /* Add your existing styles here */
     </style>
 </head>
 <body>
-
     <div class="background"></div>
-
     <header>
         Asset Tracker Dashboard
         <div class="user-info">
             <div class="user-email">Signed In As: {{ username }}</div>
-            {% if session.permissions == 'admin' %}
+            {% if user.permissions == 'admin' %}
             <a href="/user_management" title="User Management">
                 <img src="https://img.icons8.com/ios-filled/50/ffffff/user.png" class="user-icon" alt="User Management Icon">
             </a>
@@ -219,6 +46,5 @@
     <footer>
         &copy; 2024 Asset Tracker. All rights reserved.
     </footer>
-
 </body>
 </html>
