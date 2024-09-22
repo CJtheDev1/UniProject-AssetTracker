@@ -9,7 +9,11 @@
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f8ff;
+            background-color: #000; /* Black background */
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
         }
 
         header {
@@ -22,19 +26,26 @@
         }
 
         .container {
+            flex: 1;
             padding: 50px;
             max-width: 800px;
             margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         h1 {
             color: #1e90ff;
             font-size: 2.5em;
             margin-bottom: 20px;
+            text-align: center;
         }
 
         .form-group {
             margin-bottom: 20px;
+            width: 100%;
         }
 
         .form-group label {
@@ -49,6 +60,8 @@
             font-size: 1em;
             border-radius: 5px;
             border: 1px solid #ddd;
+            background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent */
+            color: #fff;
         }
 
         .form-group button {
@@ -75,6 +88,7 @@
             text-decoration: none;
             font-size: 1em;
             transition: background-color 0.3s ease;
+            margin-top: 20px;
         }
 
         .back-button:hover {
@@ -86,6 +100,7 @@
             color: white;
             padding: 10px 0;
             text-align: center;
+            position: relative;
         }
     </style>
 </head>

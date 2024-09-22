@@ -1,6 +1,6 @@
 import os
 import re
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import bcrypt
@@ -9,27 +9,23 @@ app = Flask(__name__)
 app.secret_key = 'f38b0e0a7f7b4f97a2b9a2f6c128b8d3'  # Your secret key
 
 # Updated PostgreSQL database configuration using psycopg2 driver
-app.config[
-    'SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://default:7PncvCB6DHOd@ep-orange-night-a4sgorcj.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://default:7PncvCB6DHOd@ep-orange-night-a4sgorcj.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Disable the modification tracking
 
 # Initialize SQLAlchemy and Flask-Migrate
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-
 # Define the User model with the specified table name
 class User(db.Model):
-    __tablename__ = 'users'  # Set the table name
+    __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
 
-
 # Define the Asset model
 class Asset(db.Model):
-    __tablename__ = 'assets'  # Set the table name to 'assets'
-
+    __tablename__ = 'assets'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(200), nullable=False)
@@ -39,22 +35,18 @@ class Asset(db.Model):
     def __repr__(self):
         return f'<Asset {self.name}>'
 
-
 # Password validation function
 def validate_password(password):
-    """ Validate password with at least 8 characters and 1 special character """
     if len(password) < 8:
         return "Password must be at least 8 characters long."
     if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
         return "Password must contain at least one special character."
     return None
 
-
 # Home route
 @app.route('/')
 def home():
     return render_template('home.html')
-
 
 # Login route
 @app.route('/login', methods=['GET', 'POST'])
@@ -65,11 +57,11 @@ def login():
 
         user = User.query.filter_by(username=username).first()
         if user and bcrypt.checkpw(password.encode('utf-8'), user.password_hash.encode('utf-8')):
-            return redirect(url_for('dashboard', user_email=username))
+            session['username'] = username  # Store username in session
+            return redirect(url_for('dashboard'))
         flash("Invalid username or password.")
 
     return render_template('login.html')
-
 
 # Register route
 @app.route('/register', methods=['GET', 'POST'])
@@ -96,14 +88,12 @@ def register():
 
     return render_template('register.html')
 
-
 # Dashboard route
 @app.route('/dashboard')
 def dashboard():
-    user_email = request.args.get('user_email', 'Guest')
+    username = session.get('username', 'Guest')  # Get username from session
     assets = Asset.query.all()
-    return render_template('dashboard.html', assets=assets, user_email=user_email)
-
+    return render_template('dashboard.html', assets=assets, username=username)
 
 # Create Asset route
 @app.route('/create_asset', methods=['GET', 'POST'])
@@ -121,7 +111,6 @@ def create_asset():
 
     return render_template('create_asset.html')
 
-
 # Asset Detail route
 @app.route('/asset/<int:asset_id>', methods=['GET', 'POST'])
 def asset_detail(asset_id):
@@ -132,7 +121,6 @@ def asset_detail(asset_id):
 
     if request.method == 'POST':
         if 'status' in request.form and 'owner' in request.form and 'description' in request.form:
-            # Update asset details
             status = request.form['status']
             owner = request.form['owner']
             description = request.form['description']
@@ -142,7 +130,6 @@ def asset_detail(asset_id):
             db.session.commit()
             flash(f"Asset '{asset.name}' updated successfully!")
         elif 'delete' in request.form:
-            # Delete asset
             db.session.delete(asset)
             db.session.commit()
             flash(f"Asset '{asset.name}' deleted successfully!")
@@ -152,12 +139,11 @@ def asset_detail(asset_id):
 
     return render_template('asset_detail.html', asset=asset, asset_id=asset_id)
 
-
 # Logout route
 @app.route('/logout')
 def logout():
+    session.pop('username', None)  # Clear username from session
     return redirect(url_for('home'))
-
 
 if __name__ == '__main__':
     app.run(debug=True)
