@@ -40,12 +40,21 @@
             color: white;
         }
 
+        .form-group {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px 0;
+            display: inline-block;
+        }
+
         input, select {
             padding: 10px;
-            margin: 10px;
-            width: 300px;
+            margin: 10px 0;
+            width: 280px;
             border-radius: 5px;
             border: 1px solid #ccc;
+            background-color: rgba(255, 255, 255, 0.8);
         }
 
         button {
@@ -83,27 +92,29 @@
 </header>
 
 <div class="container">
-    <form action="{{ url_for('create_asset') }}" method="POST">
-        <input type="text" name="name" placeholder="Asset Name" required>
-        <input type="text" name="description" placeholder="Asset Description" required>
+    <div class="form-group">
+        <form action="{{ url_for('create_asset') }}" method="POST">
+            <input type="text" name="name" placeholder="Asset Name" required>
+            <input type="text" name="description" placeholder="Asset Description" required>
 
-        <label for="status">Status:</label>
-        <select name="status" required>
-            <option value="In Use">In Use</option>
-            <option value="Sold">Sold</option>
-            <option value="Stored">Stored</option>
-            <option value="In Maintenance">In Maintenance</option>
-        </select>
+            <label for="status">Status:</label>
+            <select name="status" required>
+                <option value="In Use">In Use</option>
+                <option value="Sold">Sold</option>
+                <option value="Stored">Stored</option>
+                <option value="In Maintenance">In Maintenance</option>
+            </select>
 
-        <label for="owner">Owner:</label>
-        <select name="owner" required>
-            {% for user in users %}
-                <option value="{{ user.username }}">{{ user.username }}</option>
-            {% endfor %}
-        </select>
+            <label for="owner">Owner:</label>
+            <select name="owner" required>
+                {% for user in users %}
+                    <option value="{{ user.username }}">{{ user.username }}</option>
+                {% endfor %}
+            </select>
 
-        <button type="submit">Create Asset</button>
-    </form>
+            <button type="submit">Create Asset</button>
+        </form>
+    </div>
 </div>
 
 <footer>
