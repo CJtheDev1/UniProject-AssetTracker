@@ -63,6 +63,27 @@
             background-color: #ff4500;
         }
 
+        .user-icon {
+            width: 30px;
+            height: 30px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .user-icon:hover::after {
+            content: "User Management";
+            position: absolute;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            top: -40px;  /* Adjust to position above the icon */
+            left: -10px; /* Adjust to position to the left */
+            white-space: nowrap;
+            z-index: 200;
+        }
+
         .content-wrapper {
             overflow-y: auto;
             max-height: calc(100vh - 160px);
@@ -180,6 +201,9 @@
         Asset Tracker Dashboard
         <div class="user-info">
             <div class="user-email">Signed In As: {{ username }}</div>
+            <a href="/user_management" title="User Management">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/user.png" class="user-icon" alt="User Management Icon">
+            </a>
             <a href="/logout" class="logout">Logout</a>
         </div>
     </header>
