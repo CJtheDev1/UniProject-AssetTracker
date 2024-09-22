@@ -3,211 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asset Tracker Dashboard</title>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            color: #fff;
-        }
-
-        /* Starry night background with GIF */
-        .background {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            background: url('https://pictureforuni.s3.eu-north-1.amazonaws.com/untitled-2.gif') no-repeat center center fixed;
-            background-size: cover;
-            z-index: -1;
-        }
-
-        header {
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
+            background-color: #f4f4f4;
+            color: #333;
             padding: 20px;
-            text-align: center;
-            font-size: 2.5em;
-            font-weight: bold;
+        }
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        }
+        .user-icon {
             position: relative;
-            z-index: 100;
-        }
-
-        header .user-info {
-            display: flex;
-            align-items: center;
-        }
-
-        .user-email {
-            margin-right: 20px;
-            font-size: 1.1em;
-        }
-
-        .logout {
-            background-color: #ff6347;
-            padding: 10px 20px;
-            border-radius: 5px;
-            color: white;
-            text-decoration: none;
-            font-size: 1em;
-            transition: background-color 0.3s ease;
-        }
-
-        .logout:hover {
-            background-color: #ff4500;
-        }
-
-        .content-wrapper {
-            overflow-y: auto;
-            max-height: calc(100vh - 160px);
-            padding: 20px;
-        }
-
-        .container {
-            padding: 30px 50px;
-            text-align: center;
-            z-index: 1;
-            position: relative;
-            color: white;
-        }
-
-        h1 {
-            color: #1e90ff;
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
-
-        .description {
-            font-size: 1.2em;
-            color: #ddd;
-            margin-bottom: 40px;
-        }
-
-        .asset-grid {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 30px;
-        }
-
-        .asset-card {
-            background-color: rgba(255, 255, 255, 0.9);
-            color: #333;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            padding: 20px;
-            width: 300px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            text-align: left;
-        }
-
-        .asset-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-        }
-
-        .asset-card h3 {
-            color: #1e90ff;
-            margin-bottom: 10px;
-        }
-
-        .asset-card p {
-            font-size: 1em;
-            margin-bottom: 15px;
-        }
-
-        .asset-card a {
-            background-color: #1e90ff;
-            color: white;
-            padding: 10px 15px;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-            display: inline-block;
-        }
-
-        .asset-card a:hover {
-            background-color: #4682b4;
-        }
-
-        .add-asset {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #1e90ff;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2em;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-            z-index: 10;
+            color: #007bff;
+            font-size: 24px;
         }
-
-        .add-asset:hover {
-            background-color: #4682b4;
-        }
-
-        footer {
-            background-color: rgba(0, 0, 0, 0.8);
+        .user-icon:hover::after {
+            content: "User Management";
+            position: absolute;
+            top: -25px;
+            left: 0;
+            background-color: #007bff;
             color: white;
-            padding: 10px 0;
-            position: fixed;
-            bottom: 0;
+            padding: 5px;
+            border-radius: 4px;
+            white-space: nowrap;
+            font-size: 12px;
+            z-index: 1;
+        }
+        table {
             width: 100%;
-            text-align: center;
-            z-index: 10;
-            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.4);
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
         }
     </style>
 </head>
 <body>
 
-    <div class="background"></div>
+<div class="header">
+    <h1>Dashboard</h1>
+    <a href="{{ url_for('user_management') }}" class="user-icon">
+        <i class="fas fa-user"></i>
+    </a>
+</div>
 
-    <header>
-        Asset Tracker Dashboard
-        <div class="user-info">
-            <div class="user-email">Signed In As: {{ username }}</div> <!-- Updated variable here -->
-            <a href="/logout" class="logout">Logout</a>
-        </div>
-    </header>
-
-    <div class="content-wrapper">
-        <div class="container">
-            <h1>Your Assets</h1>
-            <p class="description">Below is a list of your tracked assets. Click on any asset for more details or to edit its information.</p>
-
-            <div class="asset-grid">
-                {% for asset in assets %}
-                <div class="asset-card">
-                    <h3>{{ asset.name }}</h3>
-                    <p>Description: {{ asset.description }}</p>
-                    <p>Status: {{ asset.status }}</p>
-                    <a href="{{ url_for('asset_detail', asset_id=asset.id) }}">View Details</a>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-
-    <a href="{{ url_for('create_asset') }}" class="add-asset">+</a>
-
-    <footer>
-        &copy; 2024 Asset Tracker. All rights reserved.
-    </footer>
+<table>
+    <thead>
+        <tr>
+            <th>Asset Name</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Owner</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for asset in assets %}
+        <tr>
+            <td><a href="{{ url_for('asset_detail', asset_id=asset.id) }}">{{ asset.name }}</a></td>
+            <td>{{ asset.description }}</td>
+            <td>{{ asset.status }}</td>
+            <td>{{ asset.owner }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 </body>
 </html>
