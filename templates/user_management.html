@@ -18,6 +18,12 @@
             color: #1e90ff;
             margin-bottom: 20px;
         }
+        .table-container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -57,39 +63,40 @@
 <body>
 
 <h1>User Management</h1>
-<table>
-    <thead>
-        <tr>
-            <th>Username</th>
-            <th>Permissions</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for user in users %}
-        <tr>
-            <td>{{ user.username }}</td>
-            <td>
-                <form method="POST" style="display:inline;">
-                    <input type="hidden" name="user_id" value="{{ user.id }}">
-                    <select name="permissions" onchange="this.form.submit()">
-                        <option value="user" {% if user.permissions == 'user' %}selected{% endif %}>User</option>
-                        <option value="admin" {% if user.permissions == 'admin' %}selected{% endif %}>Admin</option>
-                        <option value="banned" {% if user.permissions == 'banned' %}selected{% endif %}>Banned</option>
-                    </select>
-                    <button type="submit" name="action" value="update" class="btn btn-warning">Update</button>
-                </form>
-            </td>
-            <td>
-                <form method="POST" style="display:inline;">
-                    <input type="hidden" name="user_id" value="{{ user.id }}">
-                    <button type="submit" name="action" value="delete" class="btn btn-danger">Delete</button>
-                </form>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Permissions</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>
+                    <form method="POST" style="display:inline;">
+                        <input type="hidden" name="user_id" value="{{ user.id }}">
+                        <select name="permissions" onchange="this.form.submit()">
+                            <option value="user" {% if user.permissions == 'user' %}selected{% endif %}>User</option>
+                            <option value="admin" {% if user.permissions == 'admin' %}selected{% endif %}>Admin</option>
+                        </select>
+                        <button type="submit" name="action" value="update" class="btn btn-warning">Update</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="POST" style="display:inline;">
+                        <input type="hidden" name="user_id" value="{{ user.id }}">
+                        <button type="submit" name="action" value="delete" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 <a href="{{ url_for('dashboard') }}" class="back-button btn">Back to Dashboard</a>
 
