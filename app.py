@@ -1,3 +1,4 @@
+import os
 import re
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
@@ -5,18 +6,11 @@ from flask_migrate import Migrate
 import bcrypt
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Required for flashing messages
+app.secret_key = 'f38b0e0a7f7b4f97a2b9a2f6c128b8d3'  # Your secret key
 
-# Updated PostgreSQL database configuration using pg8000 driver
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+pg8000://default:7PncvCB6DHOd@ep-orange-night-a4sgorcj.us-east-1.aws.neon.tech:5432/verceldb'
+# PostgreSQL database configuration using pg8000 driver
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://default:7PncvCB6DHOd@ep-orange-night-a4sgorcj-pooler.us-east-1.aws.neon.tech/verceldb?sslmode=require'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Disable the modification tracking
-
-# SSL configuration for pg8000
-app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
-    'connect_args': {
-        'ssl': True  # Enable SSL for pg8000
-    }
-}
 
 # Initialize SQLAlchemy and Flask-Migrate
 db = SQLAlchemy(app)
