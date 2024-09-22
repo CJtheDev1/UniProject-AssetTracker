@@ -125,12 +125,18 @@ def user_management():
         user_id = request.form.get('user_id')
         user = User.query.get(user_id)
 
+        if request.form.get('permissions'):
+            # Update permissions
+            new_permissions = request.form.get('permissions')
+            user.permissions = new_permissions
+            db.session.commit()
+            flash(f"User '{user.username}' permissions updated to '{new_permissions}'.")
+
         if action == 'delete':
             db.session.delete(user)
             db.session.commit()
             flash(f"User '{user.username}' deleted successfully!")
         elif action == 'ban':
-            # Add ban logic here (e.g., set permissions to 'banned' or similar)
             user.permissions = 'banned'
             db.session.commit()
             flash(f"User '{user.username}' has been banned.")
