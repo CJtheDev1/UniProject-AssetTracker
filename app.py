@@ -163,6 +163,7 @@ def user_management():
 @app.route('/asset/<int:asset_id>', methods=['GET', 'POST'])
 def asset_detail(asset_id):
     asset = Asset.query.get(asset_id)
+    users = User.query.all()  # Fetch all users for the dropdown
 
     if not asset:
         return "Asset not found.", 404
@@ -186,9 +187,7 @@ def asset_detail(asset_id):
             flash(f"Asset '{asset.name}' deleted successfully!")
             return redirect(url_for('dashboard'))
 
-        return redirect(url_for('asset_detail', asset_id=asset_id))
-
-    return render_template('asset_detail.html', asset=asset, asset_id=asset_id)
+    return render_template('asset_detail.html', asset=asset, users=users)
 
 
 # Logout route
