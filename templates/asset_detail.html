@@ -125,6 +125,16 @@
         .back-button:hover {
             background-color: #4682b4;
         }
+        .flash-message {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            color: white;
+            background-color: #28a745; /* Green for success */
+        }
+        .flash-error {
+            background-color: #dc3545; /* Red for error */
+        }
         footer {
             background-color: rgba(0, 0, 0, 0.8);
             color: white;
@@ -148,6 +158,17 @@
     <div class="container">
         <h1>Asset: {{ asset.name }}</h1>
 
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="flash-message {% if category == 'error' %}flash-error{% endif %}">
+                  {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
         <!-- Asset Information -->
         <div class="asset-info">
             <p><strong>Description:</strong> {{ asset.description }}</p>
@@ -157,7 +178,7 @@
 
         <!-- Edit Asset Form -->
         <h2>Edit Asset Details</h2>
-        <form method="POST" action="{{ url_for('asset_detail', asset_id=asset_id) }}">
+        <form method="POST" action="{{ url_for('asset_detail', asset_id=asset.id) }}">
             <div class="form-group">
                 <label for="status">Status</label>
                 <select id="status" name="status" required>
@@ -191,7 +212,7 @@
         </form>
 
         <!-- Delete Asset Form -->
-        <form method="POST" action="{{ url_for('asset_detail', asset_id=asset_id) }}" style="display:inline;">
+        <form method="POST" action="{{ url_for('asset_detail', asset_id=asset.id) }}" style="display:inline;">
             <input type="hidden" name="delete" value="true">
             <button type="submit" class="delete-button">Delete Asset</button>
         </form>

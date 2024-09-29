@@ -9,14 +9,12 @@ app = Flask(__name__)
 app.secret_key = 'f38b0e0a7f7b4f97a2b9a2f6c128b8d3'  # Your secret key
 
 # PostgreSQL database configuration
-app.config[
-    'SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://default:7PncvCB6DHOd@ep-orange-night-a4sgorcj.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://default:7PncvCB6DHOd@ep-orange-night-a4sgorcj.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize SQLAlchemy and Flask-Migrate
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-
 
 # User model
 class User(db.Model):
@@ -187,7 +185,7 @@ def asset_detail(asset_id):
             flash(f"Asset '{asset.name}' deleted successfully!")
             return redirect(url_for('dashboard'))
 
-    return render_template('asset_detail.html', asset=asset, users=users)
+    return render_template('asset_detail.html', asset=asset, users=users, asset_id=asset_id)
 
 
 # Logout route
