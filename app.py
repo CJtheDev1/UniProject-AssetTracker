@@ -159,7 +159,7 @@ def user_management():
     return render_template('user_management.html', users=users)
 
 
-# Asset Detail route
+# Asset Detail route with status, owner, and description updates
 @app.route('/asset/<int:asset_id>', methods=['GET', 'POST'])
 def asset_detail(asset_id):
     asset = Asset.query.get(asset_id)
@@ -172,9 +172,12 @@ def asset_detail(asset_id):
             status = request.form['status']
             owner = request.form['owner']
             description = request.form['description']
+
+            # Update asset attributes
             asset.status = status
             asset.owner = owner
             asset.description = description
+
             db.session.commit()
             flash(f"Asset '{asset.name}' updated successfully!")
         elif 'delete' in request.form:

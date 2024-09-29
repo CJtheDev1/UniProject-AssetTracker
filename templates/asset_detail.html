@@ -78,7 +78,7 @@
             margin-bottom: 5px;
             color: #1e90ff;
         }
-        .form-group input {
+        .form-group input, .form-group select {
             width: 100%;
             padding: 10px;
             font-size: 1em;
@@ -160,11 +160,16 @@
         <form method="POST" action="{{ url_for('asset_detail', asset_id=asset_id) }}">
             <div class="form-group">
                 <label for="status">Status</label>
-                <input type="text" id="status" name="status" value="{{ asset.status }}" required>
+                <select id="status" name="status" required>
+                    <option value="In Use" {% if asset.status == "In Use" %}selected{% endif %}>In Use</option>
+                    <option value="Sold" {% if asset.status == "Sold" %}selected{% endif %}>Sold</option>
+                    <option value="Stored" {% if asset.status == "Stored" %}selected{% endif %}>Stored</option>
+                    <option value="In Maintenance" {% if asset.status == "In Maintenance" %}selected{% endif %}>In Maintenance</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="owner">Owner</label>
-                <input type="text" id="owner" name="owner" value="{{ asset.owner }}" required>
+                <input type="text" id="owner" name="owner" value="{{ username }}" readonly> <!-- Set owner to the logged-in user -->
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
