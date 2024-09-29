@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bde61363-9158-4dde-b6f9-c5eb0010ab2f" name="Changes" comment="Phase 1H fixes for dashboard to usermanagement also lockoff for users compared to admins">
+    <list default="true" id="bde61363-9158-4dde-b6f9-c5eb0010ab2f" name="Changes" comment="Phase 1H fixes for dashboard">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,14 +132,7 @@
       <workItem from="1727014789895" duration="8510000" />
       <workItem from="1727033614877" duration="1714000" />
       <workItem from="1727085116830" duration="3057000" />
-    </task>
-    <task id="LOCAL-00017" summary="Phase 1C">
-      <option name="closed" value="true" />
-      <created>1726233901730</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1726233901730</updated>
+      <workItem from="1727649821552" duration="357000" />
     </task>
     <task id="LOCAL-00018" summary="Phase 1C">
       <option name="closed" value="true" />
@@ -524,7 +518,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727035261065</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="Phase 1H fixes for dashboard">
+      <option name="closed" value="true" />
+      <created>1727650180572</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1727650180572</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -556,7 +558,8 @@
     <MESSAGE value="Phase 1G-redo Redoing visuals for create asset" />
     <MESSAGE value="Phase 1H fixes" />
     <MESSAGE value="Phase 1H fixes for dashboard to usermanagement also lockoff for users compared to admins" />
-    <option name="LAST_COMMIT_MESSAGE" value="Phase 1H fixes for dashboard to usermanagement also lockoff for users compared to admins" />
+    <MESSAGE value="Phase 1H fixes for dashboard" />
+    <option name="LAST_COMMIT_MESSAGE" value="Phase 1H fixes for dashboard" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/UniProject_AssetTracker$UniProject_AssetTracker.coverage" NAME="UniProject-AssetTracker Coverage Results" MODIFIED="1726063757125" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
