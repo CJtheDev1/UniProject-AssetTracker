@@ -43,11 +43,13 @@
         header .user-info {
             display: flex;
             align-items: center;
+            gap: 15px; /* Adjust the spacing between user info elements */
         }
 
         .user-email {
             margin-right: 20px;
             font-size: 1.1em;
+            /* Removed margin-left to move "Signed In As" slightly to the left */
         }
 
         .logout {
@@ -139,7 +141,7 @@
 
         .add-asset {
             position: fixed;
-            bottom: 20px;
+            bottom: 50px; /* Move button a bit higher above the fade-out area */
             right: 20px;
             background-color: #1e90ff;
             color: white;

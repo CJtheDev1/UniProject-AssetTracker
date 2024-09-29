@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="bde61363-9158-4dde-b6f9-c5eb0010ab2f" name="Changes" comment="Phase 1H fixes for dashboard to usermanagement also lockoff for users compared to admins">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user_management.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user_management.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,23 +129,8 @@
       <workItem from="1726577755309" duration="765000" />
       <workItem from="1726662485876" duration="1735000" />
       <workItem from="1727014789895" duration="8510000" />
-      <workItem from="1727033614877" duration="1425000" />
-    </task>
-    <task id="LOCAL-00015" summary="Phase 1C">
-      <option name="closed" value="true" />
-      <created>1726232823699</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1726232823699</updated>
-    </task>
-    <task id="LOCAL-00016" summary="Phase 1C">
-      <option name="closed" value="true" />
-      <created>1726233660580</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1726233660580</updated>
+      <workItem from="1727033614877" duration="1714000" />
+      <workItem from="1727085116830" duration="3057000" />
     </task>
     <task id="LOCAL-00017" summary="Phase 1C">
       <option name="closed" value="true" />
@@ -524,7 +508,23 @@
       <option name="project" value="LOCAL" />
       <updated>1727034880606</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="Phase 1H fixes for dashboard to usermanagement also lockoff for users compared to admins">
+      <option name="closed" value="true" />
+      <created>1727035079043</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1727035079044</updated>
+    </task>
+    <task id="LOCAL-00065" summary="Phase 1H fixes for dashboard to usermanagement also lockoff for users compared to admins">
+      <option name="closed" value="true" />
+      <created>1727035261065</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1727035261065</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
