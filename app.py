@@ -162,6 +162,7 @@ def user_management():
 def asset_detail(asset_id):
     asset = Asset.query.get(asset_id)
     users = User.query.all()  # Fetch all users for the dropdown
+    permissions = session.get('permissions', 'user')  # Get the logged-in user's permissions
 
     if not asset:
         return "Asset not found.", 404
@@ -179,13 +180,13 @@ def asset_detail(asset_id):
 
             db.session.commit()
             flash(f"Asset '{asset.name}' updated successfully!")
-        elif 'delete' in request.form:
+        elif 'delete' in request.form and permissions == 'admin':  # Ensure only admins can delete
             db.session.delete(asset)
             db.session.commit()
             flash(f"Asset '{asset.name}' deleted successfully!")
             return redirect(url_for('dashboard'))
 
-    return render_template('asset_detail.html', asset=asset, users=users, asset_id=asset_id)
+    return render_template('asset_detail.html', asset=asset, users=users, asset_id=asset_id, permissions=permissions)
 
 
 # Logout route

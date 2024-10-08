@@ -5,13 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asset Details</title>
     <style>
-        /* Existing CSS styles */
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
             color: #fff;
-            overflow-x: hidden; /* Prevent horizontal scrolling */
+            overflow-x: hidden;
         }
         .background {
             position: fixed;
@@ -55,106 +54,82 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             color: #333;
-            max-height: calc(100vh - 150px); /* Adjust height based on header/footer */
-            overflow-y: auto; /* Enable vertical scrolling */
         }
         h1 {
-            color: #1e90ff;
             font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #444;
+        }
+        .flash-message {
+            background-color: #ffeb3b;
+            padding: 10px;
             margin-bottom: 20px;
-            text-align: center;
+            color: #333;
+            border-radius: 5px;
         }
         .asset-info p {
             font-size: 1.2em;
+            margin: 5px 0;
             color: #333;
-            margin-bottom: 15px;
         }
-        .form-group {
-            margin-bottom: 20px;
+        form {
+            margin-top: 20px;
         }
-        .form-group label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #1e90ff;
-        }
-        .form-group input, .form-group select {
+        form input,
+        form select,
+        form textarea {
             width: 100%;
             padding: 10px;
-            font-size: 1em;
+            margin-bottom: 15px;
             border-radius: 5px;
-            border: 1px solid #ddd;
+            border: 1px solid #ccc;
+            font-size: 1em;
         }
-        .form-group button {
-            background-color: #1e90ff;
+        form button {
+            background-color: #4CAF50;
             color: white;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
-            font-size: 1em;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            font-size: 1.2em;
         }
-        .form-group button:hover {
-            background-color: #4682b4;
+        form button:hover {
+            background-color: #45a049;
         }
         .delete-button {
-            background-color: #ff6347;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
+            background-color: #f44336;
             color: white;
-            font-size: 1em;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            font-size: 1.2em;
+            margin-top: 15px;
         }
         .delete-button:hover {
-            background-color: #ff4500;
+            background-color: #e53935;
         }
         .back-button {
             display: inline-block;
-            margin-top: 20px;
             padding: 10px 20px;
-            background-color: #1e90ff;
+            background-color: #008cba;
             color: white;
-            border-radius: 5px;
             text-decoration: none;
-            font-size: 1em;
-            transition: background-color 0.3s ease;
+            border-radius: 5px;
+            margin-top: 15px;
         }
         .back-button:hover {
-            background-color: #4682b4;
-        }
-        .flash-message {
-            margin-bottom: 20px;
-            padding: 10px;
-            border-radius: 5px;
-            color: white;
-            background-color: #28a745; /* Green for success */
-        }
-        .flash-error {
-            background-color: #dc3545; /* Red for error */
-        }
-        footer {
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 10px 0;
-            text-align: center;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
+            background-color: #007bb5;
         }
     </style>
 </head>
 <body>
-
     <div class="background"></div>
-
     <header>
         Asset Details
         <a href="{{ url_for('logout') }}" class="logout">Logout</a>
     </header>
-
     <div class="container">
         <h1>Asset: {{ asset.name }}</h1>
 
@@ -179,50 +154,37 @@
         <!-- Edit Asset Form -->
         <h2>Edit Asset Details</h2>
         <form method="POST" action="{{ url_for('asset_detail', asset_id=asset.id) }}">
-            <div class="form-group">
-                <label for="status">Status</label>
-                <select id="status" name="status" required>
-                    <option value="In Use" {% if asset.status == "In Use" %}selected{% endif %}>In Use</option>
-                    <option value="Sold" {% if asset.status == "Sold" %}selected{% endif %}>Sold</option>
-                    <option value="Stored" {% if asset.status == "Stored" %}selected{% endif %}>Stored</option>
-                    <option value="In Maintenance" {% if asset.status == "In Maintenance" %}selected{% endif %}>In Maintenance</option>
-                </select>
-            </div>
+            <label for="description">Description:</label>
+            <textarea name="description" id="description" rows="4">{{ asset.description }}</textarea>
 
-            <!-- Dropdown for Owner -->
-            <div class="form-group">
-                <label for="owner">Owner</label>
-                <select id="owner" name="owner" required>
-                    {% for user in users %}
-                    <option value="{{ user.username }}" {% if user.username == asset.owner %}selected{% endif %}>
+            <label for="status">Status:</label>
+            <select name="status" id="status">
+                <option value="Available" {% if asset.status == 'Available' %}selected{% endif %}>Available</option>
+                <option value="Unavailable" {% if asset.status == 'Unavailable' %}selected{% endif %}>Unavailable</option>
+                <option value="In Use" {% if asset.status == 'In Use' %}selected{% endif %}>In Use</option>
+            </select>
+
+            <label for="owner">Owner:</label>
+            <select name="owner" id="owner">
+                {% for user in users %}
+                    <option value="{{ user.username }}" {% if asset.owner == user.username %}selected{% endif %}>
                         {{ user.username }}
                     </option>
-                    {% endfor %}
-                </select>
-            </div>
+                {% endfor %}
+            </select>
 
-            <div class="form-group">
-                <label for="description">Description</label>
-                <input type="text" id="description" name="description" value="{{ asset.description }}" required>
-            </div>
-
-            <div class="form-group">
-                <button type="submit">Save Changes</button>
-            </div>
+            <button type="submit">Update Asset</button>
         </form>
 
-        <!-- Delete Asset Form -->
-        <form method="POST" action="{{ url_for('asset_detail', asset_id=asset.id) }}" style="display:inline;">
-            <input type="hidden" name="delete" value="true">
-            <button type="submit" class="delete-button">Delete Asset</button>
-        </form>
+        <!-- Conditionally show Delete Asset Form for admins only -->
+        {% if permissions == 'admin' %}
+            <form method="POST" action="{{ url_for('asset_detail', asset_id=asset.id) }}" style="display:inline;">
+                <input type="hidden" name="delete" value="true">
+                <button type="submit" class="delete-button">Delete Asset</button>
+            </form>
+        {% endif %}
 
         <a href="{{ url_for('dashboard') }}" class="back-button">Back to Dashboard</a>
     </div>
-
-    <footer>
-        &copy; 2024 Asset Tracker. All rights reserved.
-    </footer>
-
 </body>
 </html>
